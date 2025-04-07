@@ -1,0 +1,8 @@
+GITHUB_USERNAME=your_github_username
+GITHUB_TOKEN=your_github_personal_access_token
+OUTPUT_PATH=~/Documents/Your_Obsidian_Vault/Repositories
+
+# Note: Replace the values above with your actual GitHub username and personal access token
+# To create a personal access token:
+# 1. Go to GitHub Settings -> Developer Settings -> Personal Access Tokens
+# 2. Generate a new token with 'repo' scope

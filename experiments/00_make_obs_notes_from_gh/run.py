@@ -28,7 +28,7 @@ def get_github_repos():
     print(f"\nTotal repositories found: {len(all_repos)}")
     print("Repository names:")
     for repo in all_repos:
-        print(f"- {repo.name} (private: {repo.private}, archived: {repo.archived})")
+        print(f"- {repo.name} (private: {repo.private}, archived: {repo.archived}, stars: {repo.stargazers_count})")
     
     return all_repos
 
@@ -72,10 +72,11 @@ def update_repo_notes():
         
         # Update YAML data
         yaml_data['is-archived'] = repo.archived
+        yaml_data['stars'] = repo.stargazers_count
         
         # Write the note
         write_note(note_path, yaml_data, content)
-        print(f"Updated note for {repo.name}")
+        print(f"Updated note for {repo.name} (stars: {repo.stargazers_count})")
 
 if __name__ == "__main__":
     if not GITHUB_TOKEN:

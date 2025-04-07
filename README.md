@@ -29,6 +29,7 @@ alias document_folder_structure='bash ~/GITHUB/sideproject-management/utils/mock
 - goes through all the md notes in the Obs folder of sideprojects
 - puts in github-based data, currently stars and archival status
 
+- this all feeds into a DataView note looking like this: ![screenshot](doc/img/obs-overview-note.png)
 
 - *very slow*
   - would be worth putting in autostart, only yeah, takes like 90 seconds to run

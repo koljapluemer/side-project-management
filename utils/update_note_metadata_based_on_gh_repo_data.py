@@ -77,12 +77,17 @@ def update_metadata():
             repo = g.get_repo(f"{owner}/{repo_name}")
             
             # Update YAML data
-            yaml_data['is-archived'] = repo.archived
-            yaml_data['stars'] = repo.stargazers_count
+            yaml_data.update({
+                'description': repo.description or '',
+                'website': repo.homepage or '',
+                'tags': [topic for topic in repo.get_topics()],
+                'open_issues': repo.open_issues_count,
+                'closed_issues': repo.get_issues(state='closed').totalCount
+            })
             
             # Write the note
             write_note(note_path, yaml_data, content)
-            print(f"  Updated metadata for {repo_name} (stars: {repo.stargazers_count}, archived: {repo.archived})")
+            print(f"  Updated metadata for {repo_name}")
             
         except Exception as e:
             print(f"  Error updating {note_path.name}: {str(e)}")

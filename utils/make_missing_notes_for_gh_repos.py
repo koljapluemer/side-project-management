@@ -35,14 +35,32 @@ def create_repo_notes():
         
         if not note_path.exists():
             print(f"Creating note for {repo.name}")
+            
+            # Get repository metadata
             yaml_data = {
-                'repo': repo.clone_url
+                'repo': repo.clone_url,
+                'description': repo.description or '',
+                'website': repo.homepage or '',
+                'tags': [topic for topic in repo.get_topics()],
+                'open_issues': repo.open_issues_count,
+                'closed_issues': repo.get_issues(state='closed').totalCount
             }
             
+            # Create note content
             content = f"""---
 {yaml.dump(yaml_data, default_flow_style=False)}---
 
+# {repo.name}
 
+{repo.description or ''}
+
+## Details
+- **Open Issues**: {repo.open_issues_count}
+- **Closed Issues**: {repo.get_issues(state='closed').totalCount}
+{f'- **Website**: {repo.homepage}' if repo.homepage else ''}
+
+## Tags
+{', '.join([f'#{topic}' for topic in repo.get_topics()]) or 'No tags'}
 """
             
             note_path.write_text(content)

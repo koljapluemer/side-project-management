@@ -1,3 +1,4 @@
+# *gets all my gh repos and makes Obs notes if they shouldn't have 'em*
 import os
 import yaml
 from pathlib import Path

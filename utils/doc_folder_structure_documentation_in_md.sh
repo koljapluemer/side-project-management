@@ -17,7 +17,8 @@ generate_tree() {
 
   for file in "${files[@]}"; do
     ((count++))
-    local name=$(basename "$file")
+    local name
+    name=$(basename "$file")
     local connector="├──"
     [ "$count" -eq "${#files[@]}" ] && connector="└──"
 
@@ -25,7 +26,7 @@ generate_tree() {
     local comment=""
 
     if [ -d "$file" ]; then
-      # Directory: check for .doc.md
+      # For directories, check for a .doc.md file for a comment.
       local doc_file="$file/.doc.md"
       if [ -f "$doc_file" ]; then
         comment=$(head -n 1 "$doc_file" | sed 's/[[:space:]]*$//')
@@ -33,7 +34,7 @@ generate_tree() {
       lines+=("$line")
       comments+=("$comment")
 
-      # Recurse into directory
+      # Recurse into the directory.
       local new_prefix="$prefix"
       if [ "$connector" == "└──" ]; then
         new_prefix+="    "
@@ -43,35 +44,46 @@ generate_tree() {
       generate_tree "$file" "$new_prefix"
 
     elif [ -f "$file" ]; then
-      # File: check first line for a recognizable comment
+      # For files, check if the first line is a proper comment.
+      # It must start with a comment marker (e.g. '#', '//' or '<!--')
+      # followed by whitespace then an asterisk immediately.
       local first_line
       first_line=$(head -n 1 "$file" | sed 's/[[:space:]]*$//')
-      if [[ "$first_line" =~ ^[[:space:]]*# ]]; then
-        comment="${first_line#\#}"
-      elif [[ "$first_line" =~ ^[[:space:]]*// ]]; then
-        comment="${first_line#//}"
-      elif [[ "$first_line" =~ ^[[:space:]]*\<\!\-\- ]]; then
-        comment=$(echo "$first_line" | sed -E 's/<!--(.*)-->/\1/')
+
+      if [[ "$first_line" =~ ^[[:space:]]*\#[[:space:]]\*(.*) ]]; then
+        comment="${BASH_REMATCH[1]}"
+        # Remove only the very last asterisk, if present.
+        comment=$(echo "$comment" | sed -E 's/\*$//')
+      elif [[ "$first_line" =~ ^[[:space:]]*//[[:space:]]\*(.*) ]]; then
+        comment="${BASH_REMATCH[1]}"
+        comment=$(echo "$comment" | sed -E 's/\*$//')
+      elif [[ "$first_line" =~ ^[[:space:]]*\<\!\-\-[[:space:]]\*(.*) ]]; then
+        comment="${BASH_REMATCH[1]}"
+        comment=$(echo "$comment" | sed -E 's/\*$//')
       fi
-      comment=$(echo "$comment" | sed 's/^[[:space:]]*//')  # Trim leading whitespace
+
+      # Trim any leading whitespace from the extracted comment.
+      comment=$(echo "$comment" | sed 's/^[[:space:]]*//')
       lines+=("$line")
       comments+=("$comment")
     fi
   done
 }
 
+# Add the target directory as root.
 lines+=("$(basename "$TARGET_DIR")/")
 comments+=("")
 generate_tree "$TARGET_DIR" ""
 
-# Determine max line length for dynamic padding
+# Determine the maximum length among all tree lines.
 max_length=0
 for line in "${lines[@]}"; do
   [ ${#line} -gt $max_length ] && max_length=${#line}
 done
+# Set dynamic padding: maximum line length + 3.
 PADDING=$((max_length + 3))
 
-# Output with aligned comments
+# Print the tree with comments aligned to the dynamic padding.
 for i in "${!lines[@]}"; do
   line="${lines[$i]}"
   comment="${comments[$i]}"

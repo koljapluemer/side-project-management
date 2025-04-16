@@ -3,7 +3,6 @@
 # Usage: ./generate-structure-aligned.sh [path] > structure.md
 # Default path is current directory
 TARGET_DIR="${1:-.}"
-PADDING=50  # Column where the '#' should align
 
 echo "\`\`\`bash"
 
@@ -65,7 +64,14 @@ lines+=("$(basename "$TARGET_DIR")/")
 comments+=("")
 generate_tree "$TARGET_DIR" ""
 
-# Output
+# Determine max line length for dynamic padding
+max_length=0
+for line in "${lines[@]}"; do
+  [ ${#line} -gt $max_length ] && max_length=${#line}
+done
+PADDING=$((max_length + 3))
+
+# Output with aligned comments
 for i in "${!lines[@]}"; do
   line="${lines[$i]}"
   comment="${comments[$i]}"

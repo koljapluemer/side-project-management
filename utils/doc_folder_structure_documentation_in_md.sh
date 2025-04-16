@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# similar to mock_folder_structure_documentation_in_md.sh, only this one takes into account .doc.md
-
 # Usage: ./generate-structure-aligned.sh [path] > structure.md
 # Default path is current directory
 TARGET_DIR="${1:-.}"
@@ -28,11 +26,15 @@ generate_tree() {
     local comment=""
 
     if [ -d "$file" ]; then
-      # If directory has a .doc.md file, get the first line
+      # Directory: check for .doc.md
       local doc_file="$file/.doc.md"
       if [ -f "$doc_file" ]; then
-        comment=$(head -n 1 "$doc_file" | sed 's/[[:space:]]*$//')  # Trim trailing whitespace
+        comment=$(head -n 1 "$doc_file" | sed 's/[[:space:]]*$//')
       fi
+      lines+=("$line")
+      comments+=("$comment")
+
+      # Recurse into directory
       local new_prefix="$prefix"
       if [ "$connector" == "└──" ]; then
         new_prefix+="    "
@@ -40,18 +42,30 @@ generate_tree() {
         new_prefix+="│   "
       fi
       generate_tree "$file" "$new_prefix"
-    fi
 
-    lines+=("$line")
-    comments+=("$comment")
+    elif [ -f "$file" ]; then
+      # File: check first line for a recognizable comment
+      local first_line
+      first_line=$(head -n 1 "$file" | sed 's/[[:space:]]*$//')
+      if [[ "$first_line" =~ ^[[:space:]]*# ]]; then
+        comment="${first_line#\#}"
+      elif [[ "$first_line" =~ ^[[:space:]]*// ]]; then
+        comment="${first_line#//}"
+      elif [[ "$first_line" =~ ^[[:space:]]*\<\!\-\- ]]; then
+        comment=$(echo "$first_line" | sed -E 's/<!--(.*)-->/\1/')
+      fi
+      comment=$(echo "$comment" | sed 's/^[[:space:]]*//')  # Trim leading whitespace
+      lines+=("$line")
+      comments+=("$comment")
+    fi
   done
 }
 
 lines+=("$(basename "$TARGET_DIR")/")
-comments+=("")  # Root directory has no comment
+comments+=("")
 generate_tree "$TARGET_DIR" ""
 
-# Print all lines with `#` aligned at $PADDING
+# Output
 for i in "${!lines[@]}"; do
   line="${lines[$i]}"
   comment="${comments[$i]}"
@@ -61,6 +75,5 @@ for i in "${!lines[@]}"; do
     printf "%s\n" "$line"
   fi
 done
-
 
 echo "\`\`\`"

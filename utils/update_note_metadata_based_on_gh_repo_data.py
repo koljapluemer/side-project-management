@@ -1,3 +1,4 @@
+# looks through all notes with a linked github and checks for metadata such as stars
 import os
 import yaml
 from pathlib import Path

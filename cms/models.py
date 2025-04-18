@@ -111,6 +111,11 @@ class Settings(models.Model):
     tiktok_account_name = models.CharField(max_length=200, null=True, blank=True)
     tiktok_ms_token = models.CharField(max_length=400, null=True, blank=True)
     twitter_account_name = models.CharField(max_length=200, null=True, blank=True)
+    twitter_bearer_token = models.CharField(max_length=400, null=True, blank=True)
+    twitter_api_key = models.CharField(max_length=400, null=True, blank=True)
+    twitter_api_secret = models.CharField(max_length=400, null=True, blank=True)
+    twitter_access_token = models.CharField(max_length=400, null=True, blank=True)
+    twitter_access_token_secret = models.CharField(max_length=400, null=True, blank=True)
     reddit_account_name = models.CharField(max_length=200, null=True, blank=True)
     hn_account_name = models.CharField(max_length=200, null=True, blank=True)
     

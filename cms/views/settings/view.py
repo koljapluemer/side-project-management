@@ -12,6 +12,11 @@ def settings_view(request):
         settings.tiktok_account_name = request.POST.get('tiktok_account_name', '')
         settings.tiktok_ms_token = request.POST.get('tiktok_ms_token', '')
         settings.twitter_account_name = request.POST.get('twitter_account_name', '')
+        settings.twitter_bearer_token = request.POST.get('twitter_bearer_token', '')
+        settings.twitter_api_key = request.POST.get('twitter_api_key', '')
+        settings.twitter_api_secret = request.POST.get('twitter_api_secret', '')
+        settings.twitter_access_token = request.POST.get('twitter_access_token', '')
+        settings.twitter_access_token_secret = request.POST.get('twitter_access_token_secret', '')
         settings.reddit_account_name = request.POST.get('reddit_account_name', '')
         settings.hn_account_name = request.POST.get('hn_account_name', '')
         settings.save()
@@ -21,5 +26,10 @@ def settings_view(request):
     return render(request, 'settings/view.html', {
         'settings': settings,
         'github_token_placeholder': '••••••••••••••••' if settings.github_token else '',
-        'tiktok_ms_token_placeholder': '••••••••••••••••' if settings.tiktok_ms_token else ''
+        'tiktok_ms_token_placeholder': '••••••••••••••••' if settings.tiktok_ms_token else '',
+        'twitter_bearer_token_placeholder': '••••••••••••••••' if settings.twitter_bearer_token else '',
+        'twitter_api_key_placeholder': '••••••••••••••••' if settings.twitter_api_key else '',
+        'twitter_api_secret_placeholder': '••••••••••••••••' if settings.twitter_api_secret else '',
+        'twitter_access_token_placeholder': '••••••••••••••••' if settings.twitter_access_token else '',
+        'twitter_access_token_secret_placeholder': '••••••••••••••••' if settings.twitter_access_token_secret else ''
     })

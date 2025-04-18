@@ -35,7 +35,7 @@
     <div class="toast toast-top toast-end z-50">
       {% if messages %}
         {% for message in messages %}
-          <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+          <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %} cursor-pointer" onclick="this.remove()">
             <span>{{ message }}</span>
           </div>
         {% endfor %}
@@ -46,5 +46,17 @@
     <main class="flex-grow container mx-auto px-4 py-8">
       {% block content %} {% endblock %}
     </main>
+
+    <script>
+      // Auto-hide toasts after 3 seconds
+      document.addEventListener('DOMContentLoaded', function() {
+        const toasts = document.querySelectorAll('.alert');
+        toasts.forEach(toast => {
+          setTimeout(() => {
+            toast.remove();
+          }, 3000);
+        });
+      });
+    </script>
   </body>
 </html>

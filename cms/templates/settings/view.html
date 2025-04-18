@@ -93,6 +93,119 @@
             </div>
 
             <div class="form-control">
+                <label class="label" for="twitter_bearer_token">
+                    <span class="label-text">Twitter Bearer Token</span>
+                </label>
+                <div class="join w-full">
+                    <input type="password" 
+                           name="twitter_bearer_token" 
+                           id="twitter_bearer_token"
+                           value="{{ settings.twitter_bearer_token }}"
+                           class="input input-bordered join-item w-full"
+                           placeholder="{{ twitter_bearer_token_placeholder }}">
+                    <button type="button" 
+                            onclick="toggleTwitterTokenVisibility()"
+                            class="btn join-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="text-sm text-gray-500 mt-1">
+                    Get this from the Twitter Developer Portal (Bearer Token)
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_api_key">
+                    <span class="label-text">Twitter API Key</span>
+                </label>
+                <div class="join w-full">
+                    <input type="password" 
+                           name="twitter_api_key" 
+                           id="twitter_api_key"
+                           value="{{ settings.twitter_api_key }}"
+                           class="input input-bordered join-item w-full"
+                           placeholder="{{ twitter_api_key_placeholder }}">
+                    <button type="button" 
+                            onclick="toggleTwitterApiKeyVisibility()"
+                            class="btn join-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_api_secret">
+                    <span class="label-text">Twitter API Secret</span>
+                </label>
+                <div class="join w-full">
+                    <input type="password" 
+                           name="twitter_api_secret" 
+                           id="twitter_api_secret"
+                           value="{{ settings.twitter_api_secret }}"
+                           class="input input-bordered join-item w-full"
+                           placeholder="{{ twitter_api_secret_placeholder }}">
+                    <button type="button" 
+                            onclick="toggleTwitterApiSecretVisibility()"
+                            class="btn join-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_access_token">
+                    <span class="label-text">Twitter Access Token</span>
+                </label>
+                <div class="join w-full">
+                    <input type="password" 
+                           name="twitter_access_token" 
+                           id="twitter_access_token"
+                           value="{{ settings.twitter_access_token }}"
+                           class="input input-bordered join-item w-full"
+                           placeholder="{{ twitter_access_token_placeholder }}">
+                    <button type="button" 
+                            onclick="toggleTwitterAccessTokenVisibility()"
+                            class="btn join-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_access_token_secret">
+                    <span class="label-text">Twitter Access Token Secret</span>
+                </label>
+                <div class="join w-full">
+                    <input type="password" 
+                           name="twitter_access_token_secret" 
+                           id="twitter_access_token_secret"
+                           value="{{ settings.twitter_access_token_secret }}"
+                           class="input input-bordered join-item w-full"
+                           placeholder="{{ twitter_access_token_secret_placeholder }}">
+                    <button type="button" 
+                            onclick="toggleTwitterAccessTokenSecretVisibility()"
+                            class="btn join-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-control">
                 <label class="label" for="reddit_account_name">
                     <span class="label-text">Reddit Username</span>
                 </label>
@@ -135,6 +248,51 @@ function toggleTokenVisibility() {
 
 function toggleTikTokTokenVisibility() {
     const tokenInput = document.getElementById('tiktok_ms_token');
+    if (tokenInput.type === 'password') {
+        tokenInput.type = 'text';
+    } else {
+        tokenInput.type = 'password';
+    }
+}
+
+function toggleTwitterTokenVisibility() {
+    const tokenInput = document.getElementById('twitter_bearer_token');
+    if (tokenInput.type === 'password') {
+        tokenInput.type = 'text';
+    } else {
+        tokenInput.type = 'password';
+    }
+}
+
+function toggleTwitterApiKeyVisibility() {
+    const tokenInput = document.getElementById('twitter_api_key');
+    if (tokenInput.type === 'password') {
+        tokenInput.type = 'text';
+    } else {
+        tokenInput.type = 'password';
+    }
+}
+
+function toggleTwitterApiSecretVisibility() {
+    const tokenInput = document.getElementById('twitter_api_secret');
+    if (tokenInput.type === 'password') {
+        tokenInput.type = 'text';
+    } else {
+        tokenInput.type = 'password';
+    }
+}
+
+function toggleTwitterAccessTokenVisibility() {
+    const tokenInput = document.getElementById('twitter_access_token');
+    if (tokenInput.type === 'password') {
+        tokenInput.type = 'text';
+    } else {
+        tokenInput.type = 'password';
+    }
+}
+
+function toggleTwitterAccessTokenSecretVisibility() {
+    const tokenInput = document.getElementById('twitter_access_token_secret');
     if (tokenInput.type === 'password') {
         tokenInput.type = 'text';
     } else {

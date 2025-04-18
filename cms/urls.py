@@ -5,9 +5,11 @@ from cms.views.content.check_tiktok import check_tiktok_view
 from cms.views.actions.actions import actions_view
 from cms.views.content.list import ContentListView
 from cms.views.content.check_twitter import check_twitter_view
+from cms.views.dashboard.dashboard import DashboardView
 
 urlpatterns = [
-    path('', ProjectListView.as_view(), name='project_list'),
+    path('', DashboardView.as_view(), name='dashboard'),
+    path('projects/', ProjectListView.as_view(), name='project_list'),
     path('settings/', settings_view, name='settings'),
     path('check-tiktok/', check_tiktok_view, name='check_tiktok'),
     path('check-twitter/', check_twitter_view, name='check_twitter'),

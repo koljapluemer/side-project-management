@@ -9,12 +9,12 @@ class MetaProject(models.Model):
 
 
 class ProjectStatus(models.TextChoices):
-    CURRENT_PRIORITY = 'current_priority'
-    ONLINE = 'online'
-    ON_ICE = 'on_ice'
-    DEAD = 'dead'
-    STUB = 'stub'
-    UNKNOWN = 'unknown'
+    CURRENT_PRIORITY = 'current_priority', 'Current Priority'
+    ONLINE = 'online', 'Online'
+    ON_ICE = 'on_ice', 'On Ice'
+    DEAD = 'dead', 'Dead'
+    STUB = 'stub', 'Stub'
+    UNKNOWN = 'unknown', 'Unknown'
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
@@ -55,10 +55,10 @@ class Repository(models.Model):
 
 # set options for deployment_providers
 class DeploymentProvider(models.TextChoices):
-    HEROKU = 'heroku'
-    NETLIFY = 'netlify'
-    GITHUB_PAGES = 'github_pages'
-    OTHER = 'other'
+    HEROKU = 'heroku', 'Heroku'
+    NETLIFY = 'netlify', 'Netlify'
+    GITHUB_PAGES = 'github_pages', 'GitHub Pages'
+    OTHER = 'other', 'Other'
 
 class Deployment(models.Model):
     link = models.URLField(max_length=200)
@@ -78,14 +78,14 @@ class GoatcounterTracker(models.Model):
         return self.goatcounter_id
 
 class ContentType(models.TextChoices):
-    TIKTOK = 'tiktok'
-    TWEET = 'tweet'
-    BLOG_POST = 'blog_post'
-    REDDIT_POST = 'reddit_post'
-    REDDIT_ANSWER = 'reddit_answer'
-    HN_POST = 'hn_post'
-    HN_COMMENT = 'hn_comment'
-    OTHER = 'other'
+    TIKTOK = 'tiktok', 'TikTok'
+    TWEET = 'tweet', 'Tweet'
+    BLOG_POST = 'blog_post', 'Blog Post'
+    REDDIT_POST = 'reddit_post', 'Reddit Post'
+    REDDIT_ANSWER = 'reddit_answer', 'Reddit Answer'
+    HN_POST = 'hn_post', 'Hacker News Post'
+    HN_COMMENT = 'hn_comment', 'Hacker News Comment'
+    OTHER = 'other', 'Other'
 
 
 class PieceOfContent(models.Model):
@@ -93,12 +93,16 @@ class PieceOfContent(models.Model):
     content_type = models.CharField(max_length=200, choices=ContentType.choices)
     likes = models.IntegerField(null=True, blank=True)
     views = models.IntegerField(null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    posted_at = models.DateTimeField(null=True, blank=True)
     
 
 class Settings(models.Model):
     local_projects_folder = models.CharField(max_length=200, null=True, blank=True)
     github_token = models.CharField(max_length=200, null=True, blank=True)
     tiktok_account_name = models.CharField(max_length=200, null=True, blank=True)
+    tiktok_ms_token = models.CharField(max_length=400, null=True, blank=True)
     twitter_account_name = models.CharField(max_length=200, null=True, blank=True)
     reddit_account_name = models.CharField(max_length=200, null=True, blank=True)
     hn_account_name = models.CharField(max_length=200, null=True, blank=True)

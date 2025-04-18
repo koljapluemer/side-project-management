@@ -1,5 +1,7 @@
 # Sideproject Management
 
+![](doc/img/screenshot.png)
+
 A Django-based system for managing and tracking side projects, their repositories, deployments, and content.
 
 ## Features

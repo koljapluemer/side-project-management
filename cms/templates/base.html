@@ -20,10 +20,10 @@
     <header class="bg-white shadow-sm">
       <nav class="container mx-auto px-4 py-4">
         <div class="flex justify-between items-center">
-          <a href="/" class="text-xl font-bold text-gray-800">Sideproject Management</a>
+          <a href="{% url 'project_list' %}" class="text-xl font-bold text-gray-800">Sideproject Management</a>
           <div class="space-x-4">
             <a href="{% url 'project_list' %}" class="text-gray-600 hover:text-gray-900">Projects</a>
-            <a href="/admin/cms/settings/" class="text-gray-600 hover:text-gray-900">Settings</a>
+            <a href="{% url 'settings' %}" class="text-gray-600 hover:text-gray-900">Settings</a>
           </div>
         </div>
       </nav>

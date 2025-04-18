@@ -15,7 +15,7 @@
                     <th>Link</th>
                     <th>Likes</th>
                     <th>Views</th>
-                    <th>Created At</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
                     </td>
                     <td>{{ content.likes|default:"-" }}</td>
                     <td>{{ content.views|default:"-" }}</td>
-                    <td>{{ content.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ content.date|date:"Y-m-d H:i" }}</td>
                 </tr>
                 {% empty %}
                 <tr>

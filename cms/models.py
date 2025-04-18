@@ -96,6 +96,13 @@ class PieceOfContent(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     posted_at = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def date(self):
+        if self.posted_at:
+            return self.posted_at
+        else:
+            return f'~ {self.created_at}'
     
 
 class Settings(models.Model):

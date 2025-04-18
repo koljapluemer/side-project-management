@@ -9,6 +9,10 @@ def settings_view(request):
     if request.method == 'POST':
         settings.local_projects_folder = request.POST.get('local_projects_folder', '')
         settings.github_token = request.POST.get('github_token', '')
+        settings.tiktok_account_name = request.POST.get('tiktok_account_name', '')
+        settings.twitter_account_name = request.POST.get('twitter_account_name', '')
+        settings.reddit_account_name = request.POST.get('reddit_account_name', '')
+        settings.hn_account_name = request.POST.get('hn_account_name', '')
         settings.save()
         messages.success(request, 'Settings updated successfully!')
         return redirect('settings')

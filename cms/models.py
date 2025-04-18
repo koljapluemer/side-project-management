@@ -89,10 +89,17 @@ class ContentType(models.TextChoices):
 
 
 class PieceOfContent(models.Model):
-    link = models.URLField(max_length=500)
+    link = models.URLField(max_length=500, unique=True)
     content_type = models.CharField(max_length=200, choices=ContentType.choices)
+    likes = models.IntegerField(null=True, blank=True)
+    views = models.IntegerField(null=True, blank=True)
     
 
 class Settings(models.Model):
-    local_projects_folder = models.CharField(max_length=200)
-    github_token = models.CharField(max_length=200)
+    local_projects_folder = models.CharField(max_length=200, null=True, blank=True)
+    github_token = models.CharField(max_length=200, null=True, blank=True)
+    tiktok_account_name = models.CharField(max_length=200, null=True, blank=True)
+    twitter_account_name = models.CharField(max_length=200, null=True, blank=True)
+    reddit_account_name = models.CharField(max_length=200, null=True, blank=True)
+    hn_account_name = models.CharField(max_length=200, null=True, blank=True)
+    

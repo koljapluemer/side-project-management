@@ -41,6 +41,56 @@
                 </div>
             </div>
 
+            <div class="divider">Social Media Accounts</div>
+
+            <div class="form-control">
+                <label class="label" for="tiktok_account_name">
+                    <span class="label-text">TikTok Username</span>
+                </label>
+                <input type="text" 
+                       name="tiktok_account_name" 
+                       id="tiktok_account_name"
+                       value="{{ settings.tiktok_account_name }}"
+                       class="input input-bordered w-full"
+                       placeholder="Enter your TikTok username">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_account_name">
+                    <span class="label-text">Twitter Username</span>
+                </label>
+                <input type="text" 
+                       name="twitter_account_name" 
+                       id="twitter_account_name"
+                       value="{{ settings.twitter_account_name }}"
+                       class="input input-bordered w-full"
+                       placeholder="Enter your Twitter username">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="reddit_account_name">
+                    <span class="label-text">Reddit Username</span>
+                </label>
+                <input type="text" 
+                       name="reddit_account_name" 
+                       id="reddit_account_name"
+                       value="{{ settings.reddit_account_name }}"
+                       class="input input-bordered w-full"
+                       placeholder="Enter your Reddit username">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="hn_account_name">
+                    <span class="label-text">Hacker News Username</span>
+                </label>
+                <input type="text" 
+                       name="hn_account_name" 
+                       id="hn_account_name"
+                       value="{{ settings.hn_account_name }}"
+                       class="input input-bordered w-full"
+                       placeholder="Enter your Hacker News username">
+            </div>
+
             <div class="card-actions justify-end mt-6">
                 <button type="submit" class="btn btn-primary">Save Settings</button>
             </div>

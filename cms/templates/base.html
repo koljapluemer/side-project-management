@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sideprojects {% block title %}{% endblock %}</title>
+    <title>Sideproject Management</title>
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,9 +16,18 @@
     />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen flex flex-col">
-    <!-- Navigation -->
-    <nav class="navbar bg-base-100 shadow-lg"></nav>
+  <body class="min-h-screen flex flex-col bg-gray-50">
+    <header class="bg-white shadow-sm">
+      <nav class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+          <a href="/" class="text-xl font-bold text-gray-800">Sideproject Management</a>
+          <div class="space-x-4">
+            <a href="{% url 'project_list' %}" class="text-gray-600 hover:text-gray-900">Projects</a>
+            <a href="/admin/cms/settings/" class="text-gray-600 hover:text-gray-900">Settings</a>
+          </div>
+        </div>
+      </nav>
+    </header>
 
     <!-- Toast Container -->
     <div class="toast toast-top toast-end z-50">

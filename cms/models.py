@@ -21,6 +21,7 @@ class Project(models.Model):
     status = models.CharField(max_length=200, choices=ProjectStatus.choices, default=ProjectStatus.UNKNOWN)
     meta_project = models.ForeignKey(MetaProject, null=True, blank=True, on_delete=models.SET_NULL)
     description = models.TextField(null=True, blank=True)
+    auto_generated = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

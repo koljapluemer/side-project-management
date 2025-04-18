@@ -1,4 +1,3 @@
-
 from django.db import models
 
 class MetaProject(models.Model):
@@ -24,7 +23,7 @@ class Project(models.Model):
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return self.name
 
 class Folder(models.Model):
     name = models.CharField(max_length=200)
@@ -95,3 +94,4 @@ class PieceOfContent(models.Model):
 
 class Settings(models.Model):
     local_projects_folder = models.CharField(max_length=200)
+    github_token = models.CharField(max_length=200)

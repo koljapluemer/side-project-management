@@ -35,7 +35,6 @@ def sync_local_folders(base_path):
             defaults={
                 'status': ProjectStatus.ONLINE,
                 'auto_generated': True,
-                'description': f"Auto-generated project for {folder_name}"
             }
         )
         

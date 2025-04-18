@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Settings</h1>
+
+    <form method="POST" class="card bg-base-100 shadow-xl">
+        {% csrf_token %}
+        <div class="card-body">
+            <div class="form-control">
+                <label class="label" for="local_projects_folder">
+                    <span class="label-text">Local Projects Folder</span>
+                </label>
+                <input type="text" 
+                       name="local_projects_folder" 
+                       id="local_projects_folder"
+                       value="{{ settings.local_projects_folder }}"
+                       class="input input-bordered w-full"
+                       placeholder="Enter the path to your local projects folder">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="github_token">
+                    <span class="label-text">GitHub Token</span>
+                </label>
+                <div class="join w-full">
+                    <input type="password" 
+                           name="github_token" 
+                           id="github_token"
+                           value="{{ settings.github_token }}"
+                           class="input input-bordered join-item w-full"
+                           placeholder="{{ github_token_placeholder }}">
+                    <button type="button" 
+                            onclick="toggleTokenVisibility()"
+                            class="btn join-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-actions justify-end mt-6">
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+function toggleTokenVisibility() {
+    const tokenInput = document.getElementById('github_token');
+    if (tokenInput.type === 'password') {
+        tokenInput.type = 'text';
+    } else {
+        tokenInput.type = 'password';
+    }
+}
+</script>
+{% endblock %}

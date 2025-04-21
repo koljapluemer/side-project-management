@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.utils import timezone
 from datetime import timedelta
-from cms.models import PieceOfContent, ContentType
+from cms.models import PieceOfContent, ContentType, GoatcounterTracker, PageViewDay
 
 class DashboardView(TemplateView):
     template_name = 'dashboard/dashboard.html'
@@ -48,5 +48,31 @@ class DashboardView(TemplateView):
             for date, data in sorted(days.items())
         ]
         
+        # Get GoatCounter stats for all projects
+        goatcounter_projects = []
+        trackers = GoatcounterTracker.objects.all()
+        
+        for tracker in trackers:
+            # Get last 14 days of page views for this project
+            page_views = PageViewDay.objects.filter(
+                project=tracker.project,
+                date__gte=end_date.date() - timedelta(days=14),
+                date__lte=end_date.date()
+            ).order_by('date')
+            
+            # Prepare data for the chart
+            dates = [pv.date.strftime('%Y-%m-%d') for pv in page_views]
+            views = [pv.views for pv in page_views]
+            
+            goatcounter_projects.append({
+                'project': tracker.project,
+                'goatcounter_id': tracker.goatcounter_id,
+                'chart_data': {
+                    'dates': dates,
+                    'views': views
+                }
+            })
+        
         context['streak_data'] = streak_data
+        context['goatcounter_projects'] = goatcounter_projects
         return context

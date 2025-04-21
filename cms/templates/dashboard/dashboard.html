@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load lucide %}
+
+{% block content %}
 <div class="space-y-8">
   <h1 class="text-3xl font-bold">Dashboard</h1>
 
@@ -35,5 +38,63 @@
       {% endfor %}
     </div>
   </div>
+
+  <!-- GoatCounter Stats -->
+  {% if goatcounter_projects %}
+  <div class="space-y-4">
+    <h2 class="text-2xl font-bold">Project Analytics</h2>
+    
+    {% for project_data in goatcounter_projects %}
+    <div class="bg-white p-4 rounded-lg shadow">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">{{ project_data.project.name }}</h3>
+        <a href="https://{{ project_data.goatcounter_id }}.goatcounter.com" 
+           target="_blank" 
+           class="btn btn-sm btn-outline gap-2">
+          {% lucide "chart-column" size=16 %}
+          View Analytics
+        </a>
+      </div>
+      
+      <div class="h-64">
+        <canvas id="pageViewsChart-{{ project_data.project.id }}"></canvas>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Initialize charts for each project
+{% for project_data in goatcounter_projects %}
+const ctx{{ project_data.project.id }} = document.getElementById('pageViewsChart-{{ project_data.project.id }}');
+new Chart(ctx{{ project_data.project.id }}, {
+    type: 'bar',
+    data: {
+        labels: {{ project_data.chart_data.dates|safe }},
+        datasets: [{
+            label: 'Page Views',
+            data: {{ project_data.chart_data.views|safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+{% endfor %}
+</script>
 {% endblock %}

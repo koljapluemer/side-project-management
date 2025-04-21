@@ -1,8 +1,10 @@
 import requests
 from datetime import datetime, timedelta
+from django.utils import timezone
+from cms.models import PageViewDay
 
-def get_goatcounter_stats(goatcounter_id, api_key):
-    """Fetch stats from GoatCounter API."""
+def get_goatcounter_stats(goatcounter_id, api_key, project):
+    """Fetch stats from GoatCounter API and store in PageViewDay model."""
     if not goatcounter_id or not api_key:
         print("Missing GoatCounter ID or API key")
         return None
@@ -24,18 +26,26 @@ def get_goatcounter_stats(goatcounter_id, api_key):
         data = response.json()
         
         views_today = 0
-        views_week = 0
         
         if data.get('hits'):
             stats = data['hits'][0]['stats']
             if stats:
                 views_today = stats[-1]['daily']
-                views_week = sum(day['daily'] for day in stats)
+                
+                # Get today's date
+                today = timezone.now().date()
+                
+                # Update or create PageViewDay entry
+                page_view, created = PageViewDay.objects.update_or_create(
+                    date=today,
+                    project=project,
+                    defaults={'views': views_today}
+                )
+                
+                print(f"Updated PageViewDay for {today}: {views_today} views")
         
-        print(f"Stats fetched successfully: Today: {views_today}, This Week: {views_week}")
         return {
-            'views_today': views_today,
-            'views_week': views_week
+            'views_today': views_today
         }
     except requests.exceptions.RequestException as e:
         print(f"Failed to fetch stats: Network error - {str(e)}")

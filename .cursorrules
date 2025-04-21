@@ -8,6 +8,10 @@ Key Principles
 - Use descriptive variable and function names; adhere to naming conventions (e.g., lowercase with underscores for functions and variables).
 - Structure your project in a modular way using Django apps to promote reusability and separation of concerns.
 
+Project Concept
+
+- This is a LOCAL, personal software. Do NOT care about auth or security. This will never be deployed to the web
+
 Folder Structure
 
 Views and Templates are organized in folders pertaining to features or views. USE THOSE!!

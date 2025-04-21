@@ -67,6 +67,17 @@ class GoatcounterTracker(models.Model):
 
     def __str__(self):
         return self.goatcounter_id
+    
+class PageViewDay(models.Model):
+    date = models.DateField()
+    views = models.IntegerField()
+    project = models.ForeignKey(Project, null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        unique_together = ('date', 'project')
+
+    def __str__(self):
+        return f"{self.date} - {self.views}"
 
 class ContentType(models.TextChoices):
     TIKTOK = 'tiktok', 'TikTok'

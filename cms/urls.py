@@ -7,6 +7,7 @@ from cms.views.goatcounter_tracker.create_update import (
     GoatcounterTrackerCreateView,
     GoatcounterTrackerUpdateView
 )
+from cms.views.goatcounter_tracker.stats import update_goatcounter_stats
 from cms.views.content.check_tiktok import check_tiktok_view
 from cms.views.actions.actions import (
     actions_view, 
@@ -27,9 +28,12 @@ urlpatterns = [
     path('projects/<int:project_pk>/goatcounter/create/', 
          GoatcounterTrackerCreateView.as_view(), 
          name='goatcounter_tracker_create'),
-    path('projects/<int:project_pk>/goatcounter/<int:pk>/update/', 
+    path('projects/<int:project_pk>/goatcounter/<int:tracker_pk>/update/', 
          GoatcounterTrackerUpdateView.as_view(), 
          name='goatcounter_tracker_update'),
+    path('projects/<int:project_pk>/goatcounter/<int:tracker_pk>/stats/', 
+         update_goatcounter_stats, 
+         name='goatcounter_tracker_stats'),
     path('settings/', settings_view, name='settings'),
     path('check-tiktok/', check_tiktok_view, name='check_tiktok'),
     path('check-twitter/', check_twitter_view, name='check_twitter'),

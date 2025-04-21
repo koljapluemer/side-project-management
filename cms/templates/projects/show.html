@@ -39,25 +39,7 @@
                 <h2 class="card-title">GoatCounter Analytics</h2>
                 
                 {% if goatcounter_tracker %}
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center gap-4">
-                            <span class="font-semibold">GoatCounter ID:</span>
-                            <span>{{ goatcounter_tracker.goatcounter_id }}</span>
-                        </div>
-                        <div class="flex gap-4">
-                            <a href="https://{{ goatcounter_tracker.goatcounter_id }}.goatcounter.com" 
-                               target="_blank" 
-                               class="btn btn-primary gap-2">
-                                {% lucide "chart-column" size=16 %}
-                                View Analytics
-                            </a>
-                            <a href="{% url 'goatcounter_tracker_update' project.pk goatcounter_tracker.pk %}" 
-                               class="btn btn-outline gap-2">
-                                {% lucide "settings" size=16 %}
-                                Configure
-                            </a>
-                        </div>
-                    </div>
+                    {% include "goatcounter_tracker/stats_view.html" %}
                 {% else %}
                     <div class="flex flex-col gap-4">
                         <p>No GoatCounter tracker configured for this project.</p>

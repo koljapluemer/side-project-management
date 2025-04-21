@@ -24,25 +24,31 @@ def get_goatcounter_stats(goatcounter_id, api_key, project):
             return None
             
         data = response.json()
+        print("API Response:", data)  # Debug print
         
         views_today = 0
         
         if data.get('hits'):
             stats = data['hits'][0]['stats']
             if stats:
-                views_today = stats[-1]['daily']
-                
-                # Get today's date
-                today = timezone.now().date()
-                
-                # Update or create PageViewDay entry
-                page_view, created = PageViewDay.objects.update_or_create(
-                    date=today,
-                    project=project,
-                    defaults={'views': views_today}
-                )
-                
-                print(f"Updated PageViewDay for {today}: {views_today} views")
+                # Process each day's stats
+                for day_stats in stats:
+                    # The field is called 'day' in the API response
+                    date = datetime.strptime(day_stats['day'], '%Y-%m-%d').date()
+                    views = day_stats['daily']
+                    
+                    # Update or create PageViewDay entry
+                    page_view, created = PageViewDay.objects.update_or_create(
+                        date=date,
+                        project=project,
+                        defaults={'views': views}
+                    )
+                    
+                    print(f"Updated PageViewDay for {date}: {views} views")
+                    
+                    # Store today's views for return value
+                    if date == timezone.now().date():
+                        views_today = views
         
         return {
             'views_today': views_today
@@ -52,4 +58,5 @@ def get_goatcounter_stats(goatcounter_id, api_key, project):
         return None
     except Exception as e:
         print(f"Failed to fetch stats: Unexpected error - {str(e)}")
+        print(f"Error details: {str(e)}")
         return None

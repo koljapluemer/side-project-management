@@ -40,6 +40,8 @@
                 
                 {% if goatcounter_tracker %}
                     {% include "goatcounter_tracker/stats_view.html" %}
+                    <div class="divider"></div>
+                    {% include "goatcounter_tracker/barchart.html" %}
                 {% else %}
                     <div class="flex flex-col gap-4">
                         <p>No GoatCounter tracker configured for this project.</p>

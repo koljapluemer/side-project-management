@@ -20,11 +20,16 @@ from cms.views.content.check_twitter import check_twitter_view
 from cms.views.dashboard.dashboard import DashboardView
 
 urlpatterns = [
+    # Dashboard
     path('', DashboardView.as_view(), name='dashboard'),
+    
+    # Projects
     path('projects/', ProjectListView.as_view(), name='project_list'),
     path('projects/<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
     path('projects/create/', project_create_update, name='project_create'),
     path('projects/<int:pk>/update/', project_create_update, name='project_update'),
+    
+    # GoatCounter
     path('projects/<int:project_pk>/goatcounter/create/', 
          GoatcounterTrackerCreateView.as_view(), 
          name='goatcounter_tracker_create'),
@@ -34,12 +39,18 @@ urlpatterns = [
     path('projects/<int:project_pk>/goatcounter/<int:tracker_pk>/stats/', 
          update_goatcounter_stats, 
          name='goatcounter_tracker_stats'),
-    path('settings/', settings_view, name='settings'),
+    
+    # Content
+    path('content/', ContentListView.as_view(), name='content_list'),
     path('check-tiktok/', check_tiktok_view, name='check_tiktok'),
     path('check-twitter/', check_twitter_view, name='check_twitter'),
+    
+    # Actions
     path('actions/', actions_view, name='actions'),
     path('sync-github/', sync_github_view, name='sync_github'),
     path('sync-local-folders/', sync_local_folders_view, name='sync_local_folders'),
     path('delete-all-projects/', delete_all_projects_view, name='delete_all_projects'),
-    path('content/', ContentListView.as_view(), name='content_list'),
+    
+    # Settings
+    path('settings/', settings_view, name='settings'),
 ]

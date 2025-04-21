@@ -36,9 +36,13 @@ function updateStats() {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            // Reload the page to get fresh data
-            window.location.reload();
+            console.log('Stats updated:', data.stats);
+        } else {
+            console.error('Failed to update stats:', data.message);
         }
+    })
+    .catch(error => {
+        console.error('Error updating stats:', error);
     });
 }
-</script> 
+</script>

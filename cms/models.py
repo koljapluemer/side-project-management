@@ -44,6 +44,7 @@ class Repository(models.Model):
     metadata_last_checked_at = models.DateTimeField(null=True, blank=True)
     stars = models.IntegerField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    linked_website = models.URLField(max_length=200, null=True, blank=True)
     is_archived = models.BooleanField(default=False)
     is_private = models.BooleanField(default=False)
     nr_issues = models.IntegerField(null=True, blank=True)

@@ -1,6 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from cms.models import Settings
+from cms.utils.sync_github_account import sync_github_repositories
+from cms.views.projects.delete_all import delete_all_projects
+
+def delete_all_projects_view(request):
+    try:
+        count = delete_all_projects()
+        messages.success(request, f"Successfully deleted {count} projects")
+    except Exception as e:
+        messages.error(request, f"Error deleting projects: {str(e)}")
+    return redirect('actions')
+
+def sync_github_view(request):
+    try:
+        num_repos = sync_github_repositories()
+        messages.success(request, f"Successfully synced {num_repos} GitHub repositories")
+    except ValueError as e:
+        messages.error(request, str(e))
+    except Exception as e:
+        messages.error(request, f"Error syncing GitHub repositories: {str(e)}")
+    return redirect('actions')
 
 def actions_view(request):
     if request.method == 'POST':

@@ -1,7 +1,11 @@
 from django.views.generic import TemplateView
 from django.utils import timezone
 from datetime import timedelta
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.utils.decorators import method_decorator
 from cms.models import PieceOfContent, ContentType, GoatcounterTracker, PageViewDay
+from cms.utils.get_goatcounter_stats import get_goatcounter_stats
 
 class DashboardView(TemplateView):
     template_name = 'dashboard/dashboard.html'
@@ -76,3 +80,22 @@ class DashboardView(TemplateView):
         context['streak_data'] = streak_data
         context['goatcounter_projects'] = goatcounter_projects
         return context
+
+@method_decorator(require_POST, name='dispatch')
+class UpdateStatsView(TemplateView):
+    def post(self, request, *args, **kwargs):
+        try:
+            # Get all GoatCounter trackers
+            trackers = GoatcounterTracker.objects.all()
+            
+            # Update stats for each tracker
+            for tracker in trackers:
+                get_goatcounter_stats(
+                    goatcounter_id=tracker.goatcounter_id,
+                    api_key=tracker.api_key,
+                    project=tracker.project
+                )
+            
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)

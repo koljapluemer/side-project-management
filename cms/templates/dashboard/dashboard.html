@@ -42,7 +42,14 @@
   <!-- GoatCounter Stats -->
   {% if goatcounter_projects %}
   <div class="space-y-4">
-    <h2 class="text-2xl font-bold">Project Analytics</h2>
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-bold">Project Analytics</h2>
+      <button onclick="updateAllStats()" 
+              class="btn btn-primary gap-2">
+        {% lucide "refresh-cw" size=16 %}
+        Update All Stats
+      </button>
+    </div>
     
     {% for project_data in goatcounter_projects %}
     <div class="bg-white p-4 rounded-lg shadow">
@@ -96,5 +103,21 @@ new Chart(ctx{{ project_data.project.id }}, {
     }
 });
 {% endfor %}
+
+function updateAllStats() {
+    fetch("{% url 'dashboard_update_stats' %}", {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Reload the page to get fresh data
+            window.location.reload();
+        }
+    });
+}
 </script>
 {% endblock %}

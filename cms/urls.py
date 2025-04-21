@@ -17,11 +17,12 @@ from cms.views.actions.actions import (
 )
 from cms.views.content.list import ContentListView
 from cms.views.content.check_twitter import check_twitter_view
-from cms.views.dashboard.dashboard import DashboardView
+from cms.views.dashboard.dashboard import DashboardView, UpdateStatsView
 
 urlpatterns = [
     # Dashboard
     path('', DashboardView.as_view(), name='dashboard'),
+    path('update-stats/', UpdateStatsView.as_view(), name='dashboard_update_stats'),
     
     # Projects
     path('projects/', ProjectListView.as_view(), name='project_list'),

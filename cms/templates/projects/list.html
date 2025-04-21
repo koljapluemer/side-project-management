@@ -21,13 +21,14 @@
                     <th>Description</th>
                     <th class="w-8"></th>
                     <th class="w-8"></th>
+                    <th class="w-8"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for project in projects %}
-                <tr class="{% if project.repository_set.exists and project.repository_set.first.is_archived %}opacity-50{% elif not project.repository_set.exists %}text-red-600{% endif %}">
+                <tr class="{% if project.deployment_set.exists %}text-green-600{% elif project.repository_set.exists and project.repository_set.first.is_archived %}opacity-50{% elif not project.repository_set.exists %}text-red-600{% endif %}">
                     <td>
-                        <a href="{% url 'project_update' project.id %}" class="link font-medium {% if not project.repository_set.exists %}text-red-600{% else %}link-primary{% endif %}">
+                        <a href="{% url 'project_update' project.id %}" class="link font-medium {% if project.deployment_set.exists %}text-green-600{% elif not project.repository_set.exists %}text-red-600{% else %}link-primary{% endif %}">
                             {{ project.name }}
                         </a>
                     </td>
@@ -35,7 +36,7 @@
                         {% if project.description %}
                         <div class="max-w-xs truncate">{{ project.description }}</div>
                         {% else %}
-                        <span class="{% if not project.repository_set.exists %}text-red-400{% else %}text-gray-400{% endif %}">-</span>
+                        <span class="{% if project.deployment_set.exists %}text-green-400{% elif not project.repository_set.exists %}text-red-400{% else %}text-gray-400{% endif %}">-</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -52,6 +53,15 @@
                             <span class="{% if not project.repository_set.exists %}text-red-400{% else %}text-gray-600{% endif %}">
                                 {% lucide "folder" size=16 %}
                             </span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.deployment_set.exists %}
+                            {% with deployment=project.deployment_set.first %}
+                            <a href="{{ deployment.link }}" target="_blank" class="text-gray-600 hover:text-gray-900">
+                                {% lucide "earth" size=16 %}
+                            </a>
+                            {% endwith %}
                         {% endif %}
                     </td>
                 </tr>

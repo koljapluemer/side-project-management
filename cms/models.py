@@ -50,12 +50,12 @@ class DeploymentProvider(models.TextChoices):
     NETLIFY = 'netlify', 'Netlify'
     GITHUB_PAGES = 'github_pages', 'GitHub Pages'
     OTHER = 'other', 'Other'
+    UNKNOWN = 'unknown', 'Unknown'
 
 class Deployment(models.Model):
     link = models.URLField(max_length=200)
-    deployment_provider = models.CharField(max_length=200, choices=DeploymentProvider.choices)
+    deployment_provider = models.CharField(max_length=200, choices=DeploymentProvider.choices, default=DeploymentProvider.UNKNOWN)
     project = models.ForeignKey(Project, null=True, blank=True, on_delete=models.SET_NULL)
-    should_track_pageviews = models.BooleanField(default=True)
 
     def __str__(self):
         return self.link

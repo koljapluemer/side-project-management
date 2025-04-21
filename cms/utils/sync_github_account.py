@@ -1,6 +1,6 @@
 import requests
 from django.utils import timezone
-from cms.models import Project, Repository, Settings
+from cms.models import Project, Repository, Settings, Deployment, DeploymentProvider
 from django.db import transaction
 import re
 
@@ -49,6 +49,7 @@ def sync_github_repositories():
     Syncs GitHub repositories with the Project model.
     Creates new Projects for repositories that don't exist and updates existing ones.
     Only includes repositories directly owned by the authenticated user.
+    Also creates/updates Deployment objects for repositories with linked websites.
     """
     settings = Settings.objects.first()
     if not settings or not settings.github_token:
@@ -90,5 +91,31 @@ def sync_github_repositories():
                 )
                 repo.project = project
                 repo.save()
+            else:
+                # Update existing project if needed
+                project = repo.project
+                if project.description != repo.description:
+                    project.description = repo.description
+                    project.save()
+
+            # Handle deployment if there's a linked website
+            if repo.linked_website:
+                # Try to determine the deployment provider based on the URL
+                deployment_provider = DeploymentProvider.OTHER
+                if 'netlify' in repo.linked_website.lower():
+                    deployment_provider = DeploymentProvider.NETLIFY
+                elif 'heroku' in repo.linked_website.lower():
+                    deployment_provider = DeploymentProvider.HEROKU
+                elif 'github.io' in repo.linked_website.lower():
+                    deployment_provider = DeploymentProvider.GITHUB_PAGES
+
+                # Create or update deployment
+                Deployment.objects.update_or_create(
+                    project=project,
+                    defaults={
+                        'link': repo.linked_website,
+                        'deployment_provider': deployment_provider,
+                    }
+                )
 
     return len(repos)

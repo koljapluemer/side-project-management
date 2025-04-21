@@ -33,7 +33,6 @@ def sync_local_folders(base_path):
         project, created = Project.objects.get_or_create(
             name=folder_name,
             defaults={
-                'status': ProjectStatus.ONLINE,
                 'auto_generated': True,
             }
         )

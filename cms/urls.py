@@ -1,7 +1,7 @@
 from django.urls import path
 from cms.views.settings.view import settings_view
 from cms.views.projects.list import ProjectListView
-from cms.views.projects.create_update import ProjectCreateUpdateView
+from cms.views.projects.create_update import project_create_update
 from cms.views.content.check_tiktok import check_tiktok_view
 from cms.views.actions.actions import (
     actions_view, 
@@ -16,8 +16,8 @@ from cms.views.dashboard.dashboard import DashboardView
 urlpatterns = [
     path('', DashboardView.as_view(), name='dashboard'),
     path('projects/', ProjectListView.as_view(), name='project_list'),
-    path('projects/create/', ProjectCreateUpdateView.as_view(), name='project_create'),
-    path('projects/<int:pk>/update/', ProjectCreateUpdateView.as_view(), name='project_update'),
+    path('projects/create/', project_create_update, name='project_create'),
+    path('projects/<int:pk>/update/', project_create_update, name='project_update'),
     path('settings/', settings_view, name='settings'),
     path('check-tiktok/', check_tiktok_view, name='check_tiktok'),
     path('check-twitter/', check_twitter_view, name='check_twitter'),

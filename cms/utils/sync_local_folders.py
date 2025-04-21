@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 from django.utils import timezone
-from cms.models import Project, Folder, ProjectStatus
+from cms.models import Project, Folder
 
 def sync_local_folders(base_path):
     """

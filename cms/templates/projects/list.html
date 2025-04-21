@@ -18,7 +18,6 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Status</th>
                     <th>Description</th>
                     <th class="w-8"></th>
                     <th class="w-8"></th>
@@ -31,21 +30,6 @@
                         <a href="{% url 'project_update' project.id %}" class="link font-medium {% if not project.repository_set.exists %}text-red-600{% else %}link-primary{% endif %}">
                             {{ project.name }}
                         </a>
-                    </td>
-                    <td>
-                        {% if project.status == 'current_priority' %}
-                        <span class="badge badge-primary">Current Priority</span>
-                        {% elif project.status == 'online' %}
-                        <span class="badge badge-success">Online</span>
-                        {% elif project.status == 'on_ice' %}
-                        <span class="badge badge-warning">On Ice</span>
-                        {% elif project.status == 'dead' %}
-                        <span class="badge badge-error">Dead</span>
-                        {% elif project.status == 'stub' %}
-                        <span class="badge badge-ghost">Stub</span>
-                        {% else %}
-                        <span class="badge badge-ghost">Unknown</span>
-                        {% endif %}
                     </td>
                     <td>
                         {% if project.description %}
@@ -73,7 +57,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center py-4">No projects found.</td>
+                    <td colspan="4" class="text-center py-4">No projects found.</td>
                 </tr>
                 {% endfor %}
             </tbody>

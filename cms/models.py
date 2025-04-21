@@ -7,18 +7,8 @@ class MetaProject(models.Model):
     def __str__(self):
         return self.name
 
-
-class ProjectStatus(models.TextChoices):
-    CURRENT_PRIORITY = 'current_priority', 'Current Priority'
-    ONLINE = 'online', 'Online'
-    ON_ICE = 'on_ice', 'On Ice'
-    DEAD = 'dead', 'Dead'
-    STUB = 'stub', 'Stub'
-    UNKNOWN = 'unknown', 'Unknown'
-
 class Project(models.Model):
     name = models.CharField(max_length=200)
-    status = models.CharField(max_length=200, choices=ProjectStatus.choices, default=ProjectStatus.UNKNOWN)
     meta_project = models.ForeignKey(MetaProject, null=True, blank=True, on_delete=models.SET_NULL)
     description = models.TextField(null=True, blank=True)
     auto_generated = models.BooleanField(default=False)

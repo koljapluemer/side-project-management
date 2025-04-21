@@ -32,20 +32,6 @@
                     {% endif %}
                 </div>
 
-                <!-- Status Field -->
-                <div class="form-control">
-                    <label class="label" for="status">
-                        <span class="label-text">Status</span>
-                    </label>
-                    <select id="status" name="status" class="select select-bordered w-full">
-                        {% for value, label in status_choices %}
-                        <option value="{{ value }}" {% if status == value %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
                 <!-- Description Field -->
                 <div class="form-control">
                     <label class="label" for="description">

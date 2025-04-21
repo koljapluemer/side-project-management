@@ -1,8 +1,24 @@
 {% extends "base.html" %}
+{% load lucide %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto">
+        <!-- Header with breadcrumbs -->
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div class="flex items-center gap-2 text-sm breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'project_list' %}" class="link link-hover">Projects</a></li>
+                    {% if object %}
+                        <li><a href="{% url 'project_detail' object.pk %}" class="link link-hover">{{ object.name }}</a></li>
+                        <li>Edit</li>
+                    {% else %}
+                        <li>New Project</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
         <h1 class="text-3xl font-bold mb-8">
             {% if object %}
                 Edit Project
@@ -44,14 +60,25 @@
                 </div>
 
                 <div class="card-actions justify-end mt-6">
-                    <a href="{% url 'project_list' %}" class="btn btn-ghost">Cancel</a>
-                    <button type="submit" class="btn btn-primary">
-                        {% if object %}
-                            Update Project
-                        {% else %}
+                    {% if object %}
+                        <a href="{% url 'project_detail' object.pk %}" class="btn btn-ghost gap-2">
+                            {% lucide "x" size=16 %}
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary gap-2">
+                            {% lucide "save" size=16 %}
+                            Save Changes
+                        </button>
+                    {% else %}
+                        <a href="{% url 'project_list' %}" class="btn btn-ghost gap-2">
+                            {% lucide "x" size=16 %}
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary gap-2">
+                            {% lucide "plus" size=16 %}
                             Create Project
-                        {% endif %}
-                    </button>
+                        </button>
+                    {% endif %}
                 </div>
             </div>
         </form>

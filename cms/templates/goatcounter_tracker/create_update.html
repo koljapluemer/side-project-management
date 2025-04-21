@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">
+            {% if is_create %}
+                Add GoatCounter Tracker
+            {% else %}
+                Edit GoatCounter Tracker
+            {% endif %}
+        </h1>
+
+        <form method="post" class="card bg-base-100 shadow-xl">
+            {% csrf_token %}
+            <div class="card-body">
+                <!-- GoatCounter ID Field -->
+                <div class="form-control">
+                    <label class="label" for="goatcounter_id">
+                        <span class="label-text">GoatCounter ID</span>
+                    </label>
+                    <input type="text" 
+                           id="goatcounter_id" 
+                           name="goatcounter_id" 
+                           value="{{ form.goatcounter_id.value|default:'' }}"
+                           class="input input-bordered w-full {% if form.goatcounter_id.errors %}input-error{% endif %}"
+                           required>
+                    {% if form.goatcounter_id.errors %}
+                    <div class="text-error text-sm mt-1">
+                        {{ form.goatcounter_id.errors.0 }}
+                    </div>
+                    {% endif %}
+                    <div class="text-sm text-gray-500 mt-1">
+                        This is your GoatCounter site ID (e.g., "mysite" for mysite.goatcounter.com)
+                    </div>
+                </div>
+
+                <!-- API Key Field -->
+                <div class="form-control">
+                    <label class="label" for="api_key">
+                        <span class="label-text">API Key</span>
+                    </label>
+                    <input type="password" 
+                           id="api_key" 
+                           name="api_key" 
+                           value="{{ form.api_key.value|default:'' }}"
+                           class="input input-bordered w-full {% if form.api_key.errors %}input-error{% endif %}"
+                           required>
+                    {% if form.api_key.errors %}
+                    <div class="text-error text-sm mt-1">
+                        {{ form.api_key.errors.0 }}
+                    </div>
+                    {% endif %}
+                    <div class="text-sm text-gray-500 mt-1">
+                        Your GoatCounter API key for accessing analytics data
+                    </div>
+                </div>
+
+                <div class="card-actions justify-end mt-6">
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-ghost">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if is_create %}
+                            Add Tracker
+                        {% else %}
+                            Update Tracker
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

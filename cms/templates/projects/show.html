@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load lucide %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header with breadcrumbs and actions -->
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div class="flex items-center gap-2 text-sm breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'project_list' %}" class="link link-hover">Projects</a></li>
+                    <li>{{ project.name }}</li>
+                </ul>
+            </div>
+            <div class="flex gap-2">
+                <a href="{% url 'project_update' project.pk %}" class="btn btn-outline gap-2">
+                    {% lucide "pencil" size=16 %}
+                    Edit
+                </a>
+            </div>
+        </div>
+
+        <!-- Project Title -->
+        <h1 class="text-3xl font-bold mb-8">{{ project.name }}</h1>
+
+        {% if project.description %}
+        <div class="card bg-base-100 shadow-xl mb-8">
+            <div class="card-body">
+                <h2 class="card-title">Description</h2>
+                <p>{{ project.description }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- GoatCounter Section -->
+        {% if has_deployments %}
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">GoatCounter Analytics</h2>
+                
+                {% if goatcounter_tracker %}
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center gap-4">
+                            <span class="font-semibold">GoatCounter ID:</span>
+                            <span>{{ goatcounter_tracker.goatcounter_id }}</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://{{ goatcounter_tracker.goatcounter_id }}.goatcounter.com" 
+                               target="_blank" 
+                               class="btn btn-primary gap-2">
+                                {% lucide "chart-column" size=16 %}
+                                View Analytics
+                            </a>
+                            <a href="{% url 'goatcounter_tracker_update' project.pk goatcounter_tracker.pk %}" 
+                               class="btn btn-outline gap-2">
+                                {% lucide "settings" size=16 %}
+                                Configure
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="flex flex-col gap-4">
+                        <p>No GoatCounter tracker configured for this project.</p>
+                        <a href="{% url 'goatcounter_tracker_create' project.pk %}" 
+                           class="btn btn-primary gap-2 w-fit">
+                            {% lucide "plus" size=16 %}
+                            Add GoatCounter Tracker
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

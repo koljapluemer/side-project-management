@@ -5,10 +5,8 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold">Projects</h1>
-        <a href="{% url 'project_create' %}" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-            </svg>
+        <a href="{% url 'project_create' %}" class="btn btn-primary gap-2">
+            {% lucide "plus" size=16 %}
             New Project
         </a>
     </div>
@@ -28,7 +26,7 @@
                 {% for project in projects %}
                 <tr class="{% if project.deployment_set.exists %}text-green-600{% elif project.repository_set.exists and project.repository_set.first.is_archived %}opacity-50{% elif not project.repository_set.exists %}text-red-600{% endif %}">
                     <td>
-                        <a href="{% url 'project_update' project.id %}" class="link font-medium {% if project.deployment_set.exists %}text-green-600{% elif not project.repository_set.exists %}text-red-600{% else %}link-primary{% endif %}">
+                        <a href="{% url 'project_detail' project.pk %}" class="link font-medium {% if project.deployment_set.exists %}text-green-600{% elif not project.repository_set.exists %}text-red-600{% else %}link-primary{% endif %}">
                             {{ project.name }}
                         </a>
                     </td>
@@ -74,7 +72,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center py-4">No projects found.</td>
+                    <td colspan="5" class="text-center py-4">No projects found.</td>
                 </tr>
                 {% endfor %}
             </tbody>

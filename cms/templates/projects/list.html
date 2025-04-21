@@ -26,9 +26,9 @@
             </thead>
             <tbody>
                 {% for project in projects %}
-                <tr>
+                <tr class="{% if project.repository_set.exists and project.repository_set.first.is_archived %}opacity-50{% elif not project.repository_set.exists %}text-red-600{% endif %}">
                     <td>
-                        <a href="{% url 'project_update' project.id %}" class="link link-primary font-medium">
+                        <a href="{% url 'project_update' project.id %}" class="link font-medium {% if not project.repository_set.exists %}text-red-600{% else %}link-primary{% endif %}">
                             {{ project.name }}
                         </a>
                     </td>
@@ -51,7 +51,7 @@
                         {% if project.description %}
                         <div class="max-w-xs truncate">{{ project.description }}</div>
                         {% else %}
-                        <span class="text-gray-400">-</span>
+                        <span class="{% if not project.repository_set.exists %}text-red-400{% else %}text-gray-400{% endif %}">-</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -65,7 +65,7 @@
                     </td>
                     <td class="text-center">
                         {% if project.folder_set.exists %}
-                            <span class="text-gray-600">
+                            <span class="{% if not project.repository_set.exists %}text-red-400{% else %}text-gray-600{% endif %}">
                                 {% lucide "folder" size=16 %}
                             </span>
                         {% endif %}

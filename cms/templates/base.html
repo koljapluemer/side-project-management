@@ -18,28 +18,41 @@
   </head>
   <body class="min-h-screen flex flex-col bg-gray-50">
     <header class="bg-white shadow-sm">
-      <nav class="container mx-auto px-4 py-4">
-        <div class="flex justify-between items-center">
-          <a href="{% url 'project_list' %}" class="text-xl font-bold text-gray-800">Sideproject Management</a>
-          <div class="space-x-4">
-            <a href="{% url 'project_list' %}" class="text-gray-600 hover:text-gray-900">Projects</a>
-            <a href="{% url 'content_list' %}" class="text-gray-600 hover:text-gray-900">Content</a>
-            <a href="{% url 'actions' %}" class="text-gray-600 hover:text-gray-900">Actions</a>
-            <a href="{% url 'settings' %}" class="text-gray-600 hover:text-gray-900">Settings</a>
-          </div>
-        </div>
+      <nav class="flex justify-center gap-4 items-center px-4 py-4">
+        <a
+          href="{% url 'dashboard' %}"
+          class="text-gray-600 hover:text-gray-900"
+          >Dashboard</a
+        >
+        <a
+          href="{% url 'project_list' %}"
+          class="text-gray-600 hover:text-gray-900"
+          >Projects</a
+        >
+        <a
+          href="{% url 'content_list' %}"
+          class="text-gray-600 hover:text-gray-900"
+          >Content</a
+        >
+        <a href="{% url 'actions' %}" class="text-gray-600 hover:text-gray-900"
+          >Actions</a
+        >
+        <a href="{% url 'settings' %}" class="text-gray-600 hover:text-gray-900"
+          >Settings</a
+        >
       </nav>
     </header>
 
     <!-- Toast Container -->
     <div class="toast toast-top toast-end z-50">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %} cursor-pointer" onclick="this.remove()">
-            <span>{{ message }}</span>
-          </div>
-        {% endfor %}
-      {% endif %}
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %} cursor-pointer"
+        onclick="this.remove()"
+      >
+        <span>{{ message }}</span>
+      </div>
+      {% endfor %} {% endif %}
     </div>
 
     <!-- Main Content -->
@@ -49,9 +62,9 @@
 
     <script>
       // Auto-hide toasts after 3 seconds
-      document.addEventListener('DOMContentLoaded', function() {
-        const toasts = document.querySelectorAll('.alert');
-        toasts.forEach(toast => {
+      document.addEventListener("DOMContentLoaded", function () {
+        const toasts = document.querySelectorAll(".alert");
+        toasts.forEach((toast) => {
           setTimeout(() => {
             toast.remove();
           }, 3000);

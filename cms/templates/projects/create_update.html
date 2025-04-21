@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">
+            {% if object %}
+                Edit Project
+            {% else %}
+                Create New Project
+            {% endif %}
+        </h1>
+
+        <form method="post" class="card bg-base-100 shadow-xl">
+            {% csrf_token %}
+            <div class="card-body">
+                <!-- Name Field -->
+                <div class="form-control">
+                    <label class="label" for="name">
+                        <span class="label-text">Name</span>
+                    </label>
+                    <input type="text" 
+                           id="name" 
+                           name="name" 
+                           value="{{ name }}"
+                           class="input input-bordered w-full {% if messages and not name %}input-error{% endif %}"
+                           required>
+                    {% if messages and not name %}
+                    <div class="text-error text-sm mt-1">
+                        Project name is required
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Status Field -->
+                <div class="form-control">
+                    <label class="label" for="status">
+                        <span class="label-text">Status</span>
+                    </label>
+                    <select id="status" name="status" class="select select-bordered w-full">
+                        {% for value, label in status_choices %}
+                        <option value="{{ value }}" {% if status == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-control">
+                    <label class="label" for="description">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea id="description" 
+                              name="description" 
+                              class="textarea textarea-bordered w-full" 
+                              rows="3">{{ description }}</textarea>
+                </div>
+
+                <div class="card-actions justify-end mt-6">
+                    <a href="{% url 'project_list' %}" class="btn btn-ghost">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        {% if object %}
+                            Update Project
+                        {% else %}
+                            Create Project
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

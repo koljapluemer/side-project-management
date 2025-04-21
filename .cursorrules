@@ -8,6 +8,10 @@ Key Principles
 - Use descriptive variable and function names; adhere to naming conventions (e.g., lowercase with underscores for functions and variables).
 - Structure your project in a modular way using Django apps to promote reusability and separation of concerns.
 
+Folder Structure
+
+Views and Templates are organized in folders pertaining to features or views. USE THOSE!!
+
 Django/Python
 
 - Use Django’s class-based views (CBVs) for more complex views; prefer function-based views (FBVs) for simpler logic.
@@ -36,7 +40,6 @@ Dependencies
 Django-Specific Guidelines
 
 - Use Django templates for rendering HTML and DRF serializers for JSON responses.
-- Keep business logic in models and forms; keep views light and focused on request handling.
 - Use Django's URL dispatcher (urls.py) to define clear and RESTful URL patterns.
 - Apply Django's security best practices (e.g., CSRF protection, SQL injection protection, XSS prevention).
 - Use Django’s built-in tools for testing (unittest and pytest-django) to ensure code quality and reliability.
@@ -57,4 +60,4 @@ Key Conventions
 2. Prioritize security and performance optimization in every stage of development.
 3. Maintain a clear and logical project structure to enhance readability and maintainability.
 
-Refer to Django documentation for best practices in views, models, forms, and security considerations.
+Refer to Django documentation for best practices in views, models , and security considerations.

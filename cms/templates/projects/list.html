@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load lucide %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
@@ -19,6 +20,8 @@
                     <th>Name</th>
                     <th>Status</th>
                     <th>Description</th>
+                    <th class="w-8"></th>
+                    <th class="w-8"></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,9 +31,6 @@
                         <a href="{% url 'project_update' project.id %}" class="link link-primary font-medium">
                             {{ project.name }}
                         </a>
-                        {% if project.auto_generated %}
-                        <span class="badge badge-sm badge-ghost">Auto-generated</span>
-                        {% endif %}
                     </td>
                     <td>
                         {% if project.status == 'current_priority' %}
@@ -54,10 +54,26 @@
                         <span class="text-gray-400">-</span>
                         {% endif %}
                     </td>
+                    <td class="text-center">
+                        {% if project.repository_set.exists %}
+                            {% with repo=project.repository_set.first %}
+                            <a href="{{ repo.link }}" target="_blank" class="text-gray-600 hover:text-gray-900">
+                                {% lucide "github" size=16 %}
+                            </a>
+                            {% endwith %}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if project.folder_set.exists %}
+                            <span class="text-gray-600">
+                                {% lucide "folder" size=16 %}
+                            </span>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="3" class="text-center py-4">No projects found.</td>
+                    <td colspan="5" class="text-center py-4">No projects found.</td>
                 </tr>
                 {% endfor %}
             </tbody>

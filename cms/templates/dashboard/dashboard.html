@@ -75,7 +75,7 @@
 
       {% for day in streak_data %}
       <div
-        class="w-6 h-6 rounded {% if day.tweet %}bg-blue-500{% else %}bg-gray-100{% endif %}"
+        class="w-6 h-6 rounded {% if day.twitter %}bg-blue-500{% else %}bg-gray-100{% endif %}"
       >
         <div class="text-[8px] text-center text-gray-500">
           {{ day.date|date:"d" }}

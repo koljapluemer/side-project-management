@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
 from cms.models import PieceOfContent, ContentType, GoatcounterTracker, PageViewDay
 from cms.utils.get_goatcounter_stats import get_goatcounter_stats
+from cms.utils.streaks import calculate_streak_progress
 
 class DashboardView(TemplateView):
     template_name = 'dashboard/dashboard.html'
@@ -29,7 +30,7 @@ class DashboardView(TemplateView):
         while current_date <= end_date:
             days[current_date.date()] = {
                 'tiktok': False,
-                'tweet': False,
+                'twitter': False,
                 'reddit': False
             }
             current_date += timedelta(days=1)
@@ -38,11 +39,11 @@ class DashboardView(TemplateView):
         for content in recent_content:
             content_date = content.posted_at.date()
             if content_date in days:
-                if content.content_type == ContentType.TIKTOK:
+                if content.content_type == ContentType.TIKTOK.value:
                     days[content_date]['tiktok'] = True
-                elif content.content_type == ContentType.TWEET:
-                    days[content_date]['tweet'] = True
-                elif content.content_type == ContentType.REDDIT_POST:
+                elif content.content_type == ContentType.TWEET.value:
+                    days[content_date]['twitter'] = True
+                elif content.content_type == ContentType.REDDIT_POST.value:
                     days[content_date]['reddit'] = True
         
         # Convert to list for template
@@ -50,11 +51,16 @@ class DashboardView(TemplateView):
             {
                 'date': date,
                 'tiktok': data['tiktok'],
-                'tweet': data['tweet'],
+                'twitter': data['twitter'],
                 'reddit': data['reddit']
             }
             for date, data in sorted(days.items())
         ]
+        
+        # Calculate streak progress for each platform
+        tiktok_progress = calculate_streak_progress(ContentType.TIKTOK.value, streak_data)
+        twitter_progress = calculate_streak_progress(ContentType.TWEET.value, streak_data)
+        reddit_progress = calculate_streak_progress(ContentType.REDDIT_POST.value, streak_data)
         
         # Get GoatCounter stats for all projects
         goatcounter_projects = []
@@ -83,6 +89,9 @@ class DashboardView(TemplateView):
         
         context['streak_data'] = streak_data
         context['goatcounter_projects'] = goatcounter_projects
+        context['tiktok_progress'] = tiktok_progress
+        context['twitter_progress'] = twitter_progress
+        context['reddit_progress'] = reddit_progress
         return context
 
 @method_decorator(require_POST, name='dispatch')

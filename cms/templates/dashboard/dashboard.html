@@ -7,6 +7,22 @@
 
   <!-- TikTok Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">TikTok</h2>
+      {% if tiktok_progress.goal_status.has_goal %}
+        <div class="flex items-center gap-2">
+          <span class="text-sm {% if tiktok_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
+            {{ tiktok_progress.goal_status.progress }}/{{ tiktok_progress.goal_status.target }}
+            {% if tiktok_progress.goal_status.goal_type == 'day_based' %}days
+            {% elif tiktok_progress.goal_status.goal_type == 'week_based' %}posts this week
+            {% elif tiktok_progress.goal_status.goal_type == 'month_based' %}posts this month{% endif %}
+          </span>
+          {% if tiktok_progress.goal_status.is_achieved %}
+            {% lucide "circle-check" class="text-success" size=20 %}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
     <div class="flex gap-1">
       <h2 class="text-xl font-semibold mr-2">T</h2>
 
@@ -20,10 +36,29 @@
       </div>
       {% endfor %}
     </div>
+    <div class="mt-2 text-sm text-gray-500">
+      Current streak: {{ tiktok_progress.current_streak }} days | Longest streak: {{ tiktok_progress.longest_streak }} days
+    </div>
   </div>
 
   <!-- Twitter Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Twitter</h2>
+      {% if twitter_progress.goal_status.has_goal %}
+        <div class="flex items-center gap-2">
+          <span class="text-sm {% if twitter_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
+            {{ twitter_progress.goal_status.progress }}/{{ twitter_progress.goal_status.target }}
+            {% if twitter_progress.goal_status.goal_type == 'day_based' %}days
+            {% elif twitter_progress.goal_status.goal_type == 'week_based' %}tweets this week
+            {% elif twitter_progress.goal_status.goal_type == 'month_based' %}tweets this month{% endif %}
+          </span>
+          {% if twitter_progress.goal_status.is_achieved %}
+            {% lucide "circle-check" class="text-success" size=20 %}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
     <div class="flex gap-1">
       <h2 class="text-xl font-semibold mr-2">X</h2>
 
@@ -37,10 +72,29 @@
       </div>
       {% endfor %}
     </div>
+    <div class="mt-2 text-sm text-gray-500">
+      Current streak: {{ twitter_progress.current_streak }} days | Longest streak: {{ twitter_progress.longest_streak }} days
+    </div>
   </div>
 
   <!-- Reddit Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Reddit</h2>
+      {% if reddit_progress.goal_status.has_goal %}
+        <div class="flex items-center gap-2">
+          <span class="text-sm {% if reddit_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
+            {{ reddit_progress.goal_status.progress }}/{{ reddit_progress.goal_status.target }}
+            {% if reddit_progress.goal_status.goal_type == 'day_based' %}days
+            {% elif reddit_progress.goal_status.goal_type == 'week_based' %}posts this week
+            {% elif reddit_progress.goal_status.goal_type == 'month_based' %}posts this month{% endif %}
+          </span>
+          {% if reddit_progress.goal_status.is_achieved %}
+            {% lucide "circle-check" class="text-success" size=20 %}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
     <div class="flex gap-1">
       <h2 class="text-xl font-semibold mr-2">R</h2>
 
@@ -53,6 +107,9 @@
         </div>
       </div>
       {% endfor %}
+    </div>
+    <div class="mt-2 text-sm text-gray-500">
+      Current streak: {{ reddit_progress.current_streak }} days | Longest streak: {{ reddit_progress.longest_streak }} days
     </div>
   </div>
 

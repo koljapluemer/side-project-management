@@ -75,37 +75,32 @@ def calculate_streak_progress(content_type, days_data):
     }
     
     if goal_type == 'day_based':
-        # For day-based goals, we need to post at least once per day
-        # Check if we've posted today
-        today = timezone.now().date()
-        has_posted_today = any(day[platform] for day in days_data if day['date'] == today)
-        goal_status['target'] = 1
-        goal_status['progress'] = 1 if has_posted_today else 0
-        goal_status['is_achieved'] = has_posted_today
+        # For day-based goals, check if we've reached the streak goal
+        goal_status['target'] = streak_goal
+        goal_status['progress'] = current_streak
+        goal_status['is_achieved'] = current_streak >= streak_goal
     elif goal_type == 'week_based':
-        # For week-based goals, we need to post at least once this week
+        # For week-based goals, count posts this week
         today = timezone.now().date()
         week_start = today - timedelta(days=today.weekday())
-        has_posted_this_week = any(
-            day[platform] 
-            for day in days_data 
-            if week_start <= day['date'] <= today
+        posts_this_week = sum(
+            1 for day in days_data 
+            if week_start <= day['date'] <= today and day[platform]
         )
-        goal_status['target'] = 1
-        goal_status['progress'] = 1 if has_posted_this_week else 0
-        goal_status['is_achieved'] = has_posted_this_week
+        goal_status['target'] = milestone_goal
+        goal_status['progress'] = posts_this_week
+        goal_status['is_achieved'] = posts_this_week >= milestone_goal
     elif goal_type == 'month_based':
-        # For month-based goals, we need to post at least once this month
+        # For month-based goals, count posts this month
         today = timezone.now().date()
         month_start = today.replace(day=1)
-        has_posted_this_month = any(
-            day[platform] 
-            for day in days_data 
-            if month_start <= day['date'] <= today
+        posts_this_month = sum(
+            1 for day in days_data 
+            if month_start <= day['date'] <= today and day[platform]
         )
-        goal_status['target'] = 1
-        goal_status['progress'] = 1 if has_posted_this_month else 0
-        goal_status['is_achieved'] = has_posted_this_month
+        goal_status['target'] = milestone_goal
+        goal_status['progress'] = posts_this_month
+        goal_status['is_achieved'] = posts_this_month >= milestone_goal
     
     return {
         'current_streak': current_streak,

@@ -39,6 +39,17 @@
     <div class="mt-2 text-sm text-gray-500">
       Current streak: {{ tiktok_progress.current_streak }} days | Longest streak: {{ tiktok_progress.longest_streak }} days
     </div>
+    {% if tiktok_progress.goal_status.has_goal and tiktok_progress.goal_status.goal_type == 'day_based' %}
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500 mb-1">
+        <span>Streak Progress</span>
+        <span>{{ tiktok_progress.current_streak }}/{{ tiktok_progress.goal_status.target }} days</span>
+      </div>
+      <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
+        <div class="bg-pink-500 h-2.5 rounded-full" style="width: {% widthratio tiktok_progress.current_streak tiktok_progress.goal_status.target 100 %}%"></div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- Twitter Streak -->
@@ -75,6 +86,17 @@
     <div class="mt-2 text-sm text-gray-500">
       Current streak: {{ twitter_progress.current_streak }} days | Longest streak: {{ twitter_progress.longest_streak }} days
     </div>
+    {% if twitter_progress.goal_status.has_goal and twitter_progress.goal_status.goal_type == 'day_based' %}
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500 mb-1">
+        <span>Streak Progress</span>
+        <span>{{ twitter_progress.current_streak }}/{{ twitter_progress.goal_status.target }} days</span>
+      </div>
+      <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
+        <div class="bg-blue-500 h-2.5 rounded-full" style="width: {% widthratio twitter_progress.current_streak twitter_progress.goal_status.target 100 %}%"></div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- Reddit Streak -->
@@ -111,6 +133,17 @@
     <div class="mt-2 text-sm text-gray-500">
       Current streak: {{ reddit_progress.current_streak }} days | Longest streak: {{ reddit_progress.longest_streak }} days
     </div>
+    {% if reddit_progress.goal_status.has_goal and reddit_progress.goal_status.goal_type == 'day_based' %}
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500 mb-1">
+        <span>Streak Progress</span>
+        <span>{{ reddit_progress.current_streak }}/{{ reddit_progress.goal_status.target }} days</span>
+      </div>
+      <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
+        <div class="bg-orange-500 h-2.5 rounded-full" style="width: {% widthratio reddit_progress.current_streak reddit_progress.goal_status.target 100 %}%"></div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- GoatCounter Stats -->

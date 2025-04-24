@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Goals</h1>
+
+    <form method="POST" class="card bg-base-100 shadow-xl">
+        {% csrf_token %}
+        <div class="card-body">
+            <div class="divider">TikTok Goals</div>
+            
+            <div class="form-control">
+                <label class="label" for="tiktok_goal_type">
+                    <span class="label-text">Goal Type</span>
+                </label>
+                <select name="tiktok_goal_type" id="tiktok_goal_type" class="select select-bordered w-full">
+                    <option value="none" {% if goal.tiktok_goal_type == 'none' %}selected{% endif %}>None</option>
+                    <option value="day_based" {% if goal.tiktok_goal_type == 'day_based' %}selected{% endif %}>Day-based</option>
+                    <option value="week_based" {% if goal.tiktok_goal_type == 'week_based' %}selected{% endif %}>Week-based</option>
+                    <option value="month_based" {% if goal.tiktok_goal_type == 'month_based' %}selected{% endif %}>Month-based</option>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="tiktok_streak_goal">
+                    <span class="label-text">Streak Goal (days)</span>
+                </label>
+                <input type="number" 
+                       name="tiktok_streak_goal" 
+                       id="tiktok_streak_goal"
+                       value="{{ goal.tiktok_streak_goal }}"
+                       class="input input-bordered w-full"
+                       min="0">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="tiktok_milestone_goal">
+                    <span class="label-text">Milestone Goal (posts)</span>
+                </label>
+                <input type="number" 
+                       name="tiktok_milestone_goal" 
+                       id="tiktok_milestone_goal"
+                       value="{{ goal.tiktok_milestone_goal }}"
+                       class="input input-bordered w-full"
+                       min="0">
+            </div>
+
+            <div class="divider">Twitter Goals</div>
+            
+            <div class="form-control">
+                <label class="label" for="twitter_goal_type">
+                    <span class="label-text">Goal Type</span>
+                </label>
+                <select name="twitter_goal_type" id="twitter_goal_type" class="select select-bordered w-full">
+                    <option value="none" {% if goal.twitter_goal_type == 'none' %}selected{% endif %}>None</option>
+                    <option value="day_based" {% if goal.twitter_goal_type == 'day_based' %}selected{% endif %}>Day-based</option>
+                    <option value="week_based" {% if goal.twitter_goal_type == 'week_based' %}selected{% endif %}>Week-based</option>
+                    <option value="month_based" {% if goal.twitter_goal_type == 'month_based' %}selected{% endif %}>Month-based</option>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_streak_goal">
+                    <span class="label-text">Streak Goal (days)</span>
+                </label>
+                <input type="number" 
+                       name="twitter_streak_goal" 
+                       id="twitter_streak_goal"
+                       value="{{ goal.twitter_streak_goal }}"
+                       class="input input-bordered w-full"
+                       min="0">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="twitter_milestone_goal">
+                    <span class="label-text">Milestone Goal (tweets)</span>
+                </label>
+                <input type="number" 
+                       name="twitter_milestone_goal" 
+                       id="twitter_milestone_goal"
+                       value="{{ goal.twitter_milestone_goal }}"
+                       class="input input-bordered w-full"
+                       min="0">
+            </div>
+
+            <div class="divider">Reddit Goals</div>
+            
+            <div class="form-control">
+                <label class="label" for="reddit_goal_type">
+                    <span class="label-text">Goal Type</span>
+                </label>
+                <select name="reddit_goal_type" id="reddit_goal_type" class="select select-bordered w-full">
+                    <option value="none" {% if goal.reddit_goal_type == 'none' %}selected{% endif %}>None</option>
+                    <option value="day_based" {% if goal.reddit_goal_type == 'day_based' %}selected{% endif %}>Day-based</option>
+                    <option value="week_based" {% if goal.reddit_goal_type == 'week_based' %}selected{% endif %}>Week-based</option>
+                    <option value="month_based" {% if goal.reddit_goal_type == 'month_based' %}selected{% endif %}>Month-based</option>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="reddit_streak_goal">
+                    <span class="label-text">Streak Goal (days)</span>
+                </label>
+                <input type="number" 
+                       name="reddit_streak_goal" 
+                       id="reddit_streak_goal"
+                       value="{{ goal.reddit_streak_goal }}"
+                       class="input input-bordered w-full"
+                       min="0">
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="reddit_milestone_goal">
+                    <span class="label-text">Milestone Goal (posts)</span>
+                </label>
+                <input type="number" 
+                       name="reddit_milestone_goal" 
+                       id="reddit_milestone_goal"
+                       value="{{ goal.reddit_milestone_goal }}"
+                       class="input input-bordered w-full"
+                       min="0">
+            </div>
+
+            <div class="card-actions justify-end mt-6">
+                <button type="submit" class="btn btn-primary">Save Goals</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

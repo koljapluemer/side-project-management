@@ -18,6 +18,7 @@ from cms.views.actions.actions import (
 from cms.views.content.list import ContentListView
 from cms.views.content.check_twitter import check_twitter_view
 from cms.views.dashboard.dashboard import DashboardView, UpdateStatsView
+from cms.views.goals.view import goals_view
 
 urlpatterns = [
     # Dashboard
@@ -54,4 +55,7 @@ urlpatterns = [
     
     # Settings
     path('settings/', settings_view, name='settings'),
+    
+    # Goals
+    path('goals/', goals_view, name='goals'),
 ]

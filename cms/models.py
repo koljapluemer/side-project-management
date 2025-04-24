@@ -121,3 +121,22 @@ class Settings(models.Model):
     reddit_account_name = models.CharField(max_length=200, null=True, blank=True)
     hn_account_name = models.CharField(max_length=200, null=True, blank=True)
     
+class GoalType(models.TextChoices):
+    NONE = 'none', 'None'
+    DAY_BASED = 'day_based', 'Day-based'
+    WEEK_BASED = 'week_based', 'Week-based'
+    MONTH_BASED = 'month_based', 'Month-based'
+
+class Goal(models.Model):
+    tiktok_goal_type = models.CharField(max_length=200, choices=GoalType.choices, default=GoalType.NONE)
+    tiktok_streak_goal = models.IntegerField(default=0)
+    tiktok_milestone_goal = models.IntegerField(default=0)
+
+    twitter_goal_type = models.CharField(max_length=200, choices=GoalType.choices, default=GoalType.NONE)
+    twitter_streak_goal = models.IntegerField(default=0)
+    twitter_milestone_goal = models.IntegerField(default=0)
+
+    reddit_goal_type = models.CharField(max_length=200, choices=GoalType.choices, default=GoalType.NONE)
+    reddit_streak_goal = models.IntegerField(default=0)
+    reddit_milestone_goal = models.IntegerField(default=0)
+    

@@ -39,6 +39,23 @@
     </div>
   </div>
 
+  <!-- Reddit Streak -->
+  <div class="bg-white p-4 rounded-lg shadow">
+    <div class="flex gap-1">
+      <h2 class="text-xl font-semibold mr-2">R</h2>
+
+      {% for day in streak_data %}
+      <div
+        class="w-6 h-6 rounded {% if day.reddit %}bg-orange-500{% else %}bg-gray-100{% endif %}"
+      >
+        <div class="text-[8px] text-center text-gray-500">
+          {{ day.date|date:"d" }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
   <!-- GoatCounter Stats -->
   {% if goatcounter_projects %}
   <div class="space-y-4">

@@ -29,7 +29,8 @@ class DashboardView(TemplateView):
         while current_date <= end_date:
             days[current_date.date()] = {
                 'tiktok': False,
-                'tweet': False
+                'tweet': False,
+                'reddit': False
             }
             current_date += timedelta(days=1)
         
@@ -41,13 +42,16 @@ class DashboardView(TemplateView):
                     days[content_date]['tiktok'] = True
                 elif content.content_type == ContentType.TWEET:
                     days[content_date]['tweet'] = True
+                elif content.content_type == ContentType.REDDIT_POST:
+                    days[content_date]['reddit'] = True
         
         # Convert to list for template
         streak_data = [
             {
                 'date': date,
                 'tiktok': data['tiktok'],
-                'tweet': data['tweet']
+                'tweet': data['tweet'],
+                'reddit': data['reddit']
             }
             for date, data in sorted(days.items())
         ]

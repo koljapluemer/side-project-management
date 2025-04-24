@@ -7,21 +7,6 @@
 
   <!-- TikTok Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
-    <div class="flex justify-between items-center mb-4">
-      {% if tiktok_progress.goal_status.has_goal %}
-        <div class="flex items-center gap-2">
-          <span class="text-sm {% if tiktok_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
-            {{ tiktok_progress.goal_status.progress }}/{{ tiktok_progress.goal_status.target }}
-            {% if tiktok_progress.goal_status.goal_type == 'day_based' %}days
-            {% elif tiktok_progress.goal_status.goal_type == 'week_based' %}posts this week
-            {% elif tiktok_progress.goal_status.goal_type == 'month_based' %}posts this month{% endif %}
-          </span>
-          {% if tiktok_progress.goal_status.is_achieved %}
-            {% lucide "circle-check" class="text-success" size=20 %}
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
     <div class="flex gap-1">
       <h2 class="text-xl font-semibold mr-2">T</h2>
 
@@ -64,21 +49,6 @@
 
   <!-- Twitter Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
-    <div class="flex justify-between items-center mb-4">
-      {% if twitter_progress.goal_status.has_goal %}
-        <div class="flex items-center gap-2">
-          <span class="text-sm {% if twitter_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
-            {{ twitter_progress.goal_status.progress }}/{{ twitter_progress.goal_status.target }}
-            {% if twitter_progress.goal_status.goal_type == 'day_based' %}days
-            {% elif twitter_progress.goal_status.goal_type == 'week_based' %}tweets this week
-            {% elif twitter_progress.goal_status.goal_type == 'month_based' %}tweets this month{% endif %}
-          </span>
-          {% if twitter_progress.goal_status.is_achieved %}
-            {% lucide "circle-check" class="text-success" size=20 %}
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
     <div class="flex gap-1">
       <h2 class="text-xl font-semibold mr-2">X</h2>
 
@@ -121,21 +91,6 @@
 
   <!-- Reddit Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
-    <div class="flex justify-between items-center mb-4">
-      {% if reddit_progress.goal_status.has_goal %}
-        <div class="flex items-center gap-2">
-          <span class="text-sm {% if reddit_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
-            {{ reddit_progress.goal_status.progress }}/{{ reddit_progress.goal_status.target }}
-            {% if reddit_progress.goal_status.goal_type == 'day_based' %}days
-            {% elif reddit_progress.goal_status.goal_type == 'week_based' %}posts this week
-            {% elif reddit_progress.goal_status.goal_type == 'month_based' %}posts this month{% endif %}
-          </span>
-          {% if reddit_progress.goal_status.is_achieved %}
-            {% lucide "circle-check" class="text-success" size=20 %}
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
     <div class="flex gap-1">
       <h2 class="text-xl font-semibold mr-2">R</h2>
 

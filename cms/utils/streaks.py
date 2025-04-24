@@ -5,6 +5,8 @@ from cms.models import PieceOfContent, ContentType, Goal
 def calculate_streak_progress(content_type, days_data):
     """
     Calculate streak progress and goal status for a given content type.
+    Implements the "don't miss twice" rule: a single gap doesn't break the streak,
+    but two consecutive gaps do.
     
     Args:
         content_type: The content type to check (TIKTOK, TWEET, or REDDIT_POST)
@@ -12,7 +14,7 @@ def calculate_streak_progress(content_type, days_data):
     
     Returns:
         Dictionary containing:
-        - current_streak: Number of consecutive days with content
+        - current_streak: Number of consecutive days with content (excluding single gaps)
         - longest_streak: Longest streak in the period
         - goal_status: Dictionary with goal progress information
         - milestone_status: Dictionary with milestone progress information
@@ -48,27 +50,38 @@ def calculate_streak_progress(content_type, days_data):
     streak_goal = getattr(goal, f'{platform}_streak_goal')
     milestone_goal = getattr(goal, f'{platform}_milestone_goal')
     
-    # Calculate streaks
+    # Calculate streaks with "don't miss twice" rule
     current_streak = 0
     longest_streak = 0
     temp_streak = 0
     total_posts = 0
+    gap_count = 0  # Track consecutive gaps
     
-    for day in reversed(days_data):  # Start from most recent
-        has_content = day[platform]
+    # Convert days_data to list of booleans for easier processing
+    has_content_list = [day[platform] for day in reversed(days_data)]
+    
+    # Process each day
+    for i, has_content in enumerate(has_content_list):
         if has_content:
             temp_streak += 1
             total_posts += 1
-            if temp_streak > longest_streak:
-                longest_streak = temp_streak
+            gap_count = 0  # Reset gap count when we find content
         else:
-            if current_streak == 0:  # Only set current_streak once
-                current_streak = temp_streak
-            temp_streak = 0
+            gap_count += 1
+            if gap_count >= 2:  # Two consecutive gaps break the streak
+                if current_streak == 0:  # Only set current_streak once
+                    current_streak = temp_streak
+                if temp_streak > longest_streak:
+                    longest_streak = temp_streak
+                temp_streak = 0
+                gap_count = 1  # Reset to 1 as this gap might be part of next streak's break
     
-    # If we haven't broken the streak yet, current_streak is temp_streak
-    if current_streak == 0:
-        current_streak = temp_streak
+    # Handle the final streak
+    if temp_streak > 0:
+        if current_streak == 0:  # If we haven't set current_streak yet
+            current_streak = temp_streak
+        if temp_streak > longest_streak:
+            longest_streak = temp_streak
     
     # Calculate goal progress
     goal_status = {

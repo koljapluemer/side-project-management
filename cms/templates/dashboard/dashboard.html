@@ -8,7 +8,6 @@
   <!-- TikTok Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">TikTok</h2>
       {% if tiktok_progress.goal_status.has_goal %}
         <div class="flex items-center gap-2">
           <span class="text-sm {% if tiktok_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
@@ -50,12 +49,22 @@
       </div>
     </div>
     {% endif %}
+    {% if tiktok_progress.milestone_status.has_goal %}
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500 mb-1">
+        <span>Milestone Progress</span>
+        <span>{{ tiktok_progress.milestone_status.progress }}/{{ tiktok_progress.milestone_status.target }} posts</span>
+      </div>
+      <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
+        <div class="bg-pink-500 h-2.5 rounded-full" style="width: {% widthratio tiktok_progress.milestone_status.progress tiktok_progress.milestone_status.target 100 %}%"></div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- Twitter Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">Twitter</h2>
       {% if twitter_progress.goal_status.has_goal %}
         <div class="flex items-center gap-2">
           <span class="text-sm {% if twitter_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
@@ -97,12 +106,22 @@
       </div>
     </div>
     {% endif %}
+    {% if twitter_progress.milestone_status.has_goal %}
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500 mb-1">
+        <span>Milestone Progress</span>
+        <span>{{ twitter_progress.milestone_status.progress }}/{{ twitter_progress.milestone_status.target }} tweets</span>
+      </div>
+      <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
+        <div class="bg-blue-500 h-2.5 rounded-full" style="width: {% widthratio twitter_progress.milestone_status.progress twitter_progress.milestone_status.target 100 %}%"></div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <!-- Reddit Streak -->
   <div class="bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-semibold">Reddit</h2>
       {% if reddit_progress.goal_status.has_goal %}
         <div class="flex items-center gap-2">
           <span class="text-sm {% if reddit_progress.goal_status.is_achieved %}text-success{% else %}text-warning{% endif %}">
@@ -141,6 +160,17 @@
       </div>
       <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
         <div class="bg-orange-500 h-2.5 rounded-full" style="width: {% widthratio reddit_progress.current_streak reddit_progress.goal_status.target 100 %}%"></div>
+      </div>
+    </div>
+    {% endif %}
+    {% if reddit_progress.milestone_status.has_goal %}
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500 mb-1">
+        <span>Milestone Progress</span>
+        <span>{{ reddit_progress.milestone_status.progress }}/{{ reddit_progress.milestone_status.target }} posts</span>
+      </div>
+      <div class="w-full max-w-full overflow-hidden bg-gray-200 rounded-full h-2.5">
+        <div class="bg-orange-500 h-2.5 rounded-full" style="width: {% widthratio reddit_progress.milestone_status.progress reddit_progress.milestone_status.target 100 %}%"></div>
       </div>
     </div>
     {% endif %}

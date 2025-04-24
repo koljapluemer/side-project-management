@@ -15,20 +15,23 @@ def calculate_streak_progress(content_type, days_data):
         - current_streak: Number of consecutive days with content
         - longest_streak: Longest streak in the period
         - goal_status: Dictionary with goal progress information
+        - milestone_status: Dictionary with milestone progress information
     """
     # Get the goal settings
     goal = Goal.objects.first()
     if not goal:
+        empty_status = {
+            'has_goal': False,
+            'goal_type': 'none',
+            'progress': 0,
+            'target': 0,
+            'is_achieved': False
+        }
         return {
             'current_streak': 0,
             'longest_streak': 0,
-            'goal_status': {
-                'has_goal': False,
-                'goal_type': 'none',
-                'progress': 0,
-                'target': 0,
-                'is_achieved': False
-            }
+            'goal_status': empty_status.copy(),
+            'milestone_status': empty_status.copy()
         }
     
     # Map content types to their corresponding goal attributes
@@ -49,11 +52,13 @@ def calculate_streak_progress(content_type, days_data):
     current_streak = 0
     longest_streak = 0
     temp_streak = 0
+    total_posts = 0
     
     for day in reversed(days_data):  # Start from most recent
         has_content = day[platform]
         if has_content:
             temp_streak += 1
+            total_posts += 1
             if temp_streak > longest_streak:
                 longest_streak = temp_streak
         else:
@@ -72,6 +77,14 @@ def calculate_streak_progress(content_type, days_data):
         'progress': 0,
         'target': 0,
         'is_achieved': False
+    }
+    
+    # Calculate milestone progress
+    milestone_status = {
+        'has_goal': milestone_goal > 0,
+        'progress': total_posts,
+        'target': milestone_goal,
+        'is_achieved': total_posts >= milestone_goal
     }
     
     if goal_type == 'day_based':
@@ -105,5 +118,6 @@ def calculate_streak_progress(content_type, days_data):
     return {
         'current_streak': current_streak,
         'longest_streak': longest_streak,
-        'goal_status': goal_status
+        'goal_status': goal_status,
+        'milestone_status': milestone_status
     }

@@ -35,7 +35,7 @@ urlpatterns = [
     path('projects/<int:project_pk>/goatcounter/create/', 
          GoatcounterTrackerCreateView.as_view(), 
          name='goatcounter_tracker_create'),
-    path('projects/<int:project_pk>/goatcounter/<int:tracker_pk>/update/', 
+    path('projects/<int:project_pk>/goatcounter/<int:pk>/update/', 
          GoatcounterTrackerUpdateView.as_view(), 
          name='goatcounter_tracker_update'),
     path('projects/<int:project_pk>/goatcounter/<int:tracker_pk>/stats/', 

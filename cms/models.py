@@ -109,6 +109,7 @@ class PieceOfContent(models.Model):
 
 class Settings(models.Model):
     local_projects_folder = models.CharField(max_length=200, null=True, blank=True)
+    obsidian_projects_folder = models.CharField(max_length=200, null=True, blank=True)
     github_token = models.CharField(max_length=200, null=True, blank=True)
     tiktok_account_name = models.CharField(max_length=200, null=True, blank=True)
     tiktok_ms_token = models.CharField(max_length=400, null=True, blank=True)

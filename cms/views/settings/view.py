@@ -8,6 +8,7 @@ def settings_view(request):
     
     if request.method == 'POST':
         settings.local_projects_folder = request.POST.get('local_projects_folder', '')
+        settings.obsidian_projects_folder = request.POST.get('obsidian_projects_folder', '')
         settings.github_token = request.POST.get('github_token', '')
         settings.tiktok_account_name = request.POST.get('tiktok_account_name', '')
         settings.tiktok_ms_token = request.POST.get('tiktok_ms_token', '')

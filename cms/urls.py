@@ -19,6 +19,8 @@ from cms.views.content.list import ContentListView
 from cms.views.content.check_twitter import check_twitter_view
 from cms.views.dashboard.dashboard import DashboardView, UpdateStatsView
 from cms.views.goals.view import goals_view
+from cms.views.links.list import LinkListView
+from cms.views.links.create_update import link_create_update, link_delete
 
 urlpatterns = [
     # Dashboard
@@ -30,6 +32,12 @@ urlpatterns = [
     path('projects/<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
     path('projects/create/', project_create_update, name='project_create'),
     path('projects/<int:pk>/update/', project_create_update, name='project_update'),
+    
+    # Links
+    path('links/', LinkListView.as_view(), name='link_list'),
+    path('links/create/', link_create_update, name='link_create'),
+    path('links/<int:pk>/update/', link_create_update, name='link_update'),
+    path('links/<int:pk>/delete/', link_delete, name='link_delete'),
     
     # GoatCounter
     path('projects/<int:project_pk>/goatcounter/create/', 

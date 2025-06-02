@@ -141,3 +141,10 @@ class Goal(models.Model):
     reddit_streak_goal = models.IntegerField(default=0)
     reddit_milestone_goal = models.IntegerField(default=0)
     
+class Link(models.Model):
+    url = models.URLField(max_length=500, unique=True)
+    project = models.ForeignKey(Project, null=True, blank=True, on_delete=models.SET_NULL)
+    label = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.url

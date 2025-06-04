@@ -21,6 +21,7 @@ from cms.views.dashboard.dashboard import DashboardView, UpdateStatsView
 from cms.views.goals.view import goals_view
 from cms.views.links.list import LinkListView
 from cms.views.links.create_update import link_create_update, link_delete
+from cms.views.todos.list import TodoListView
 
 urlpatterns = [
     # Dashboard
@@ -66,4 +67,7 @@ urlpatterns = [
     
     # Goals
     path('goals/', goals_view, name='goals'),
+
+    # Todos
+    path('todos/', TodoListView.as_view(), name='todo_list'),
 ]

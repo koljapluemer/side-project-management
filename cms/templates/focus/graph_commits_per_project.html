@@ -21,6 +21,7 @@
         <div class="mt-6 text-sm text-gray-500">
             <p>Data is fetched from local Git repositories in your configured projects folder.</p>
             <p>Only projects with commits in the last 10 weeks are shown.</p>
+            <p>Hover over legend items to highlight projects in the chart.</p>
         </div>
     </div>
 
@@ -80,6 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         legend: {
                             position: 'top',
+                            onHover: function(e) {
+                                e.native.target.style.cursor = 'pointer';
+                            },
+                            onLeave: function(e) {
+                                e.native.target.style.cursor = 'default';
+                            }
                         }
                     },
                     scales: {

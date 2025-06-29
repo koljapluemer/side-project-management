@@ -22,16 +22,16 @@ def get_nr_of_commits_per_week_and_project():
     end_date = timezone.now().date()
     start_date = end_date - timedelta(weeks=10)
     
-    # Initialize data structure with week numbers
+    # Initialize data structure with actual week numbers of the year
     weeks = []
     week_numbers = []
     current_date = start_date
-    week_num = 1
     while current_date <= end_date:
         weeks.append(current_date.strftime('%Y-%m-%d'))
+        # Get the ISO week number of the year
+        week_num = current_date.isocalendar()[1]
         week_numbers.append(f"Week {week_num}")
         current_date += timedelta(weeks=1)
-        week_num += 1
     
     project_commits = {}
     

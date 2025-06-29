@@ -18,11 +18,16 @@ class DashboardView(TemplateView):
         end_date = timezone.now()
         start_date = end_date - timedelta(days=30)
         
-        # Get all content in the last 30 days
+        # Get all content in the last 30 days for streak visualization
         recent_content = PieceOfContent.objects.filter(
             posted_at__gte=start_date,
             posted_at__lte=end_date
         )
+        
+        # Get total counts for each platform (all time)
+        total_tiktok = PieceOfContent.objects.filter(content_type=ContentType.TIKTOK.value).count()
+        total_twitter = PieceOfContent.objects.filter(content_type=ContentType.TWEET.value).count()
+        total_reddit = PieceOfContent.objects.filter(content_type=ContentType.REDDIT_POST.value).count()
         
         # Create a dictionary to store daily content counts
         days = {}
@@ -61,6 +66,11 @@ class DashboardView(TemplateView):
         tiktok_progress = calculate_streak_progress(ContentType.TIKTOK.value, streak_data)
         twitter_progress = calculate_streak_progress(ContentType.TWEET.value, streak_data)
         reddit_progress = calculate_streak_progress(ContentType.REDDIT_POST.value, streak_data)
+        
+        # Update milestone progress with total counts
+        tiktok_progress['milestone_status']['progress'] = total_tiktok
+        twitter_progress['milestone_status']['progress'] = total_twitter
+        reddit_progress['milestone_status']['progress'] = total_reddit
         
         # Get GoatCounter stats for all projects
         goatcounter_projects = []

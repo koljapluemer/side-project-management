@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from cms.models import Repository, Link
+import random
 
 class TodoListView(TemplateView):
     template_name = 'todos/list.html'
@@ -19,5 +20,7 @@ class TodoListView(TemplateView):
                     'project': repo.project
                 })
 
+        # Randomize the order of todos
+        random.shuffle(repositories_without_links)
         context['todos'] = repositories_without_links
         return context 

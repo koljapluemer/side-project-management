@@ -13,6 +13,10 @@
                 </ul>
             </div>
             <div class="flex gap-2">
+                <a href="{% url 'link_create' %}?project={{ project.pk }}" class="btn btn-outline gap-2">
+                    {% lucide "link" size=16 %}
+                    Add Link
+                </a>
                 <a href="{% url 'project_update' project.pk %}" class="btn btn-outline gap-2">
                     {% lucide "pencil" size=16 %}
                     Edit

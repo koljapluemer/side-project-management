@@ -25,7 +25,14 @@ def link_create_update(request, pk=None):
             form.save()
             return redirect('link_list')
     else:
-        form = LinkForm(instance=link)
+        initial = {}
+        if not pk and 'project' in request.GET:
+            try:
+                project = Project.objects.get(pk=request.GET['project'])
+                initial['project'] = project
+            except Project.DoesNotExist:
+                pass
+        form = LinkForm(instance=link, initial=initial)
     
     return render(request, 'links/create_update.html', {
         'form': form,

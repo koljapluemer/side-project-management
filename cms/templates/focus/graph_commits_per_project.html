@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Commits per Project</h1>
+        <p class="text-gray-600">Showing commit activity across local projects for the last 10 weeks</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Weekly Commit Activity</h2>
+            <p class="text-sm text-gray-600">Stacked area chart showing commits per project over time</p>
+        </div>
+        
+        <div class="relative" style="height: 400px;">
+            <canvas id="commitsChart"></canvas>
+        </div>
+        
+        <div class="mt-6 text-sm text-gray-500">
+            <p>Data is fetched from local Git repositories in your configured projects folder.</p>
+            <p>Only projects with commits in the last 10 weeks are shown.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetch data from our API endpoint
+    fetch('{% url "graph_commits_per_project_data" %}')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Error fetching data:', data.error);
+                document.querySelector('#commitsChart').parentElement.innerHTML = 
+                    '<div class="text-red-600 p-4">Error loading chart data: ' + data.error + '</div>';
+                return;
+            }
+            
+            const ctx = document.getElementById('commitsChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Commits per Project (Last 10 Weeks)'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Week'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Number of Commits'
+                            },
+                            beginAtZero: true,
+                            stacked: true
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.4
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.querySelector('#commitsChart').parentElement.innerHTML = 
+                '<div class="text-red-600 p-4">Error loading chart data. Please check your local projects folder configuration.</div>';
+        });
+});
+</script>
+{% endblock %}

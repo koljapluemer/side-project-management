@@ -22,6 +22,10 @@ from cms.views.goals.view import goals_view
 from cms.views.links.list import LinkListView
 from cms.views.links.create_update import link_create_update, link_delete
 from cms.views.todos.list import TodoListView
+from cms.views.focus.graph_commits_per_project import (
+    graph_commits_per_project_view,
+    graph_commits_per_project_data
+)
 
 urlpatterns = [
     # Dashboard
@@ -70,4 +74,8 @@ urlpatterns = [
 
     # Todos
     path('todos/', TodoListView.as_view(), name='todo_list'),
+    
+    # Focus
+    path('focus/graph-commits-per-project/', graph_commits_per_project_view, name='graph_commits_per_project'),
+    path('focus/graph-commits-per-project/data/', graph_commits_per_project_data, name='graph_commits_per_project_data'),
 ]

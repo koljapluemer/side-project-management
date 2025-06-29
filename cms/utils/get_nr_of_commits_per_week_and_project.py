@@ -22,12 +22,16 @@ def get_nr_of_commits_per_week_and_project():
     end_date = timezone.now().date()
     start_date = end_date - timedelta(weeks=10)
     
-    # Initialize data structure
+    # Initialize data structure with week numbers
     weeks = []
+    week_numbers = []
     current_date = start_date
+    week_num = 1
     while current_date <= end_date:
         weeks.append(current_date.strftime('%Y-%m-%d'))
+        week_numbers.append(f"Week {week_num}")
         current_date += timedelta(weeks=1)
+        week_num += 1
     
     project_commits = {}
     
@@ -54,9 +58,20 @@ def get_nr_of_commits_per_week_and_project():
         if commits:  # Only include projects with commits
             project_commits[folder_name] = commits
     
+    # Calculate number of different projects per week
+    projects_per_week = []
+    for week_idx in range(len(weeks)):
+        week_project_count = 0
+        for project_name, commit_counts in project_commits.items():
+            if commit_counts[week_idx] > 0:
+                week_project_count += 1
+        projects_per_week.append(week_project_count)
+    
     return {
         'weeks': weeks,
-        'projects': project_commits
+        'week_numbers': week_numbers,
+        'projects': project_commits,
+        'projects_per_week': projects_per_week
     }
 
 

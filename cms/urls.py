@@ -24,7 +24,8 @@ from cms.views.links.create_update import link_create_update, link_delete
 from cms.views.todos.list import TodoListView
 from cms.views.focus.graph_commits_per_project import (
     graph_commits_per_project_view,
-    graph_commits_per_project_data
+    graph_commits_per_project_data,
+    graph_projects_per_week_data
 )
 
 urlpatterns = [
@@ -78,4 +79,5 @@ urlpatterns = [
     # Focus
     path('focus/graph-commits-per-project/', graph_commits_per_project_view, name='graph_commits_per_project'),
     path('focus/graph-commits-per-project/data/', graph_commits_per_project_data, name='graph_commits_per_project_data'),
+    path('focus/graph-commits-per-project/projects-data/', graph_projects_per_week_data, name='graph_projects_per_week_data'),
 ]

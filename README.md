@@ -1,5 +1,8 @@
 # Sideproject Management
 
+> [!NOTE]  
+> *Archived. Usable but I'm not using it too much. Utilizing simpler standalone scripts now.*
+
 ![](doc/img/dashboard.png)
 
 A Django-based system for managing and tracking side projects, their repositories, deployments, and content.
